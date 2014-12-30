@@ -1,0 +1,17 @@
+{
+    "name": "backbee/backbee-standard",
+    "description": "BackBee CMS Standard Edition distribution",
+    "keywords": ["CMS", "Core", "Content Management", "No backend CMS", "User Management"],
+    "type": "project",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Eric Chau",
+            "email": "eric.chau@lp-digital.fr"
+        }
+    ],
+    "require": {
+        "backbee/backbee": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
