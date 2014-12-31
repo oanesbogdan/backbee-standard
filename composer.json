@@ -13,5 +13,10 @@
     "require": {
         "backbee/backbee": "dev-master"
     },
+    "autoload": {
+        "psr-4": {
+            "BackBee\\Standard\\": ""
+        }
+    },
     "minimum-stability": "dev"
 }
