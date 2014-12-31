@@ -1,0 +1,7 @@
+# Content makup (this is deprecated and unused since version 0.12)
+
+contentmarkup:
+    contentclass: bb5-content
+    draggableclass: bb5-draggable-item
+    resizableclass: bb5-resizable-item
+    droppableclass: bb5-droppable-item
