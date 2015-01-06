@@ -15,6 +15,7 @@
         "backbee/backbee": "dev-master",
         "backbee/script-handler": "dev-master"
         "backbee/demo-bundle": "dev-master"
+        "backbee/toolbar-bundle": "dev-master"
     },
     "autoload": {
         "psr-4": {
