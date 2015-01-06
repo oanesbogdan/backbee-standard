@@ -22,39 +22,27 @@
 class Requirement
 {
     /**
-     * [$expected description]
-     *
      * @var mixed
      */
     private $expected;
 
     /**
-     * [$value description]
-     *
      * @var mixed
      */
     private $value;
 
     /**
-     * [$message description]
-     *
      * @var string
      */
     private $title;
 
     /**
-     * [$message description]
-     *
      * @var string
      */
     private $error_message;
 
     /**
-     * [__construct description]
-     *
-     * @param [type] $expected [description]
-     * @param [type] $value    [description]
-     * @param [type] $message  [description]
+     * Requirement's constructor
      */
     public function __construct($expected, $value, $title, $error_message)
     {
@@ -65,9 +53,7 @@ class Requirement
     }
 
     /**
-     * [isOk description]
-     *
-     * @return boolean [description]
+     * @return boolean
      */
     public function isOk()
     {
@@ -75,9 +61,7 @@ class Requirement
     }
 
     /**
-     * [getMessage description]
-     *
-     * @return [type] [description]
+     * @return string
      */
     public function getTitle()
     {
@@ -85,9 +69,7 @@ class Requirement
     }
 
     /**
-     * [getMessage description]
-     *
-     * @return [type] [description]
+     * @return string
      */
     public function getErrorMessage()
     {
@@ -100,13 +82,11 @@ class BackBeeRequirements
     const REQUIRED_PHP_VERSION = '5.4.0';
 
     /**
-     * [checkRequirements description]
-     *
-     * @return [type] [description]
+     * @return array
      */
     public function getRequirements()
     {
-        $requirements = array();
+        $requirements = [];
 
         $requirements[] = new Requirement(
             true,
@@ -119,7 +99,7 @@ class BackBeeRequirements
             true,
             is_dir(realpath(__DIR__ . '/../vendor/composer')),
             'Dependencies installation',
-            'You have to install BackBee\'s dependencies by running `composer.phar install`. To learn more: https://getcomposer.org/'
+            'You have to install BackBee\'s dependencies by running `composer.phar install` (https://getcomposer.org/)'
         );
 
         $cache_directory = realpath(__DIR__ . '/..') . '/cache';
@@ -145,13 +125,11 @@ class BackBeeRequirements
 class BootstrapRequirements
 {
     /**
-     * [getRequirements description]
-     *
-     * @return [type] [description]
+     * @return array
      */
     public function getRequirements()
     {
-        $requirements = array();
+        $requirements = [];
 
         $config_directory = dirname(__DIR__) . '/repository/Config';
         $requirements[] = new Requirement(

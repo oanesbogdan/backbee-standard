@@ -470,7 +470,7 @@ switch ($step) {
 
                                 <div class="form-group">
                                     <label for="user">username</label>
-                                    <input type="text" name="user" placeholder="root" required="required" />
+                                    <input type="text" name="user" value="root" required="required" />
                                 </div>
 
                                 <div class="form-group">
@@ -555,7 +555,7 @@ server {
 }</pre>
                     <p>Example of apache2 virtual host:</p>
                     <pre>
-#example of apache2 virtual host for BackBee project
+# example of apache2 virtual host for BackBee project
 &lt;VirtualHost *:80&gt;
     ServerName <?php echo $site['domain']; ?>
 
@@ -563,7 +563,7 @@ server {
 
     RewriteEngine On
 
-    RewriteCond %{DOCUMENT_ROOT}/../repository/Ressources/$1 -f
+    RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
     RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../BackBee/Resources/$1 -f
