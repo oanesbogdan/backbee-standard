@@ -1,0 +1,11 @@
+<div {{ this.bb5content(null, {'class': 'alert alert-info', 'draggable': false})|raw }}>
+    <h1>Welcome to the home of your BackBee project!</h1>
+
+    {% if this.isBBUser() == false %}
+        <p>To connect to the backend, please press CTRL + ALT + B to show the login dialog. Note that we created a super admin user for you with login (=admin) and password (=admin).</p>
+    {% else %}
+        <p>You are now connected to your account. Use the toolbar to add, remove and edit content block.</p>
+
+        <p>Enjoy</p>
+    {% endif %}
+</div>

@@ -1,0 +1,14 @@
+block_demo:
+    properties:
+        name: Block demo
+        description: "Block for demonstration"
+        category: [Demo]
+    elements:
+        text:
+            type: BackBee\ClassContent\Element\text
+            default:
+                value: This is a random field you can edit...
+            maxentry: 1
+            parameters:
+                aloha: !!scalar paragraph
+                editable: !!boolean true
