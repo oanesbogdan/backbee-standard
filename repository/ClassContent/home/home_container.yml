@@ -1,0 +1,12 @@
+home_container:
+    properties:
+        name: home container
+        description: ""
+        category: [Home]
+        forbiden-actions: []
+    elements:
+        container:
+            type: BackBee\ClassContent\container\one_column
+    parameters:
+        container_title: !!scalar
+        container_bottom: !!scalar
