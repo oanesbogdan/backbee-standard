@@ -1,0 +1,14 @@
+# doctrine configuration (by default, doctrine.yml is ignored by git)
+dbal:
+    driver: pdo_mysql
+    host: localhost
+    port: 3306
+    dbname: backbee_standard
+    user: root
+    password: ~
+    charset: utf8
+    collation: utf8_general_ci
+    defaultTableOptions:
+        collate: utf8_general_ci
+        engine: InnoDB
+        charset: utf8

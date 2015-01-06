@@ -1,4 +1,9 @@
 
+cache/*
+log/*
 vendor/*
 
+bootstrap.yml
 composer.lock
+doctrine.yml
+sites.yml
