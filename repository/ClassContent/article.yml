@@ -1,0 +1,55 @@
+article:
+    properties:
+        name: Article
+        description: "An article contains title, author, abstract, main image and a body"
+        category: [article]
+        indexation: [[permid], [title->value]]
+        labelized-by: title->value
+        forbiden-actions: []
+    elements:
+        title:
+            type: BackBee\ClassContent\Element\text
+            label: Title
+            default:
+                value: Your title here...
+            maxentry: 1
+            parameters:
+                aloha: !!scalar lite
+                editable: !!boolean true
+        title_alt:
+            type: BackBee\ClassContent\Element\text
+            label: Alternative title
+            maxentry: 1
+            parameters:
+                aloha: !!scalar lite
+                editable: !!boolean true
+        permid: !!scalar
+        abstract:
+            type: BackBee\ClassContent\Element\text
+            label: Abstract
+            default:
+                value: Your abstract here...
+            maxentry: 1
+            parameters:
+                aloha: !!scalar lite
+                editable: !!boolean true
+        body:
+            type: BackBee\ClassContent\article\body
+        image:
+            type: BackBee\ClassContent\Media\image
+        image_alt:
+            type: BackBee\ClassContent\Media\image
+            label: Alternative image
+        keywords:
+            type: BackBee\ClassContent\Element\keyword
+            label: Keywords
+            maxentry: 0
+        related:
+            type: BackBee\ClassContent\article\related
+        signature: !!scalar
+        permid: !!scalar
+    parameters:
+        excludefromautobloc:
+            rendertype: checkbox
+            label: "Exclude from autobloc"
+            checked: false

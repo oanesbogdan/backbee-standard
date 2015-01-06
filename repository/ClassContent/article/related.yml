@@ -1,0 +1,10 @@
+related:
+  extends: \BackBee\ClassContent\ContentSet
+  properties:
+    name: Linked articles
+    description: "Block that displays linked articles <br><em>Container(s) :</em><br> ContentSet, Article"
+    category: [Article]
+    clonemode: inherited
+  parameters:
+    rendermode: !!scalar related
+    accept: !!string BackBee\ClassContent\article

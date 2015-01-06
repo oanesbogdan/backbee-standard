@@ -1,0 +1,12 @@
+{% if this.isBBUser() == true or image.path != '' %}
+	<figure {{ this.bb5content({'class': 'figure'})|raw }}>
+		<img {{ this.bb5content(image)|raw }}
+			src="{{ this.getImageUrl(image.path)|raw }}"
+			alt="{{ title }}" style="width: 100%" itemprop="contentURL">
+
+	    <figcaption class="figure-caption" itemprop="description">
+			<p class="figure-copyright">{{ copyrights }}</p>
+	        <p>{{ description }}</p>
+	    </figcaption>
+	</figure>
+{% endif %}

@@ -1,0 +1,7 @@
+firewalls:
+    front_area:
+        pattern: ^/
+        anonymous: ~
+
+sudoers:
+    admin: 1

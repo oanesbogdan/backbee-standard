@@ -1,0 +1,7 @@
+{% if this.isBBUser() == true %}
+	<div {{ this.datacontent()|raw }}>
+		{{ this.render(body)|raw }}
+	</div>
+{% else %}
+	{{ body.value|raw }}
+{% endif %}

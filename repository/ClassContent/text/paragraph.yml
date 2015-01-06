@@ -1,0 +1,15 @@
+paragraph:
+    properties:
+        name: Paragraph
+        description: Paragraph
+        category: [article]
+    elements:
+        body:
+            type: BackBee\ClassContent\Element\text
+            label: paragraph container
+            default:
+                value: Your text here...
+            maxentry: 1
+            parameters:
+                aloha: !!scalar paragraph
+                editable: !!boolean true
