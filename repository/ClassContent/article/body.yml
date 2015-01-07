@@ -1,5 +1,5 @@
 body:
-  extends: \BackBee\ClassContent\ContentSet
+  extends: \BackBuilder\ClassContent\ContentSet
   properties:
     category: [!Article]
     cache-lifetime: 60

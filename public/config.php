@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 if (!isset($_SERVER['HTTP_HOST'])) {
     exit('This script cannot be run from the CLI. Run it from a browser.');
 }
@@ -101,11 +102,11 @@ switch ($step) {
                 }
             }
 
-            $application = new \BackBee\Standard\Application();
+            $application = new \BackBuilder\BBApplication();
 
             try {
-                $database = new BackBee\Installer\Database($application);
-                $database->updateBackBeeSchema();
+                $database = new BackBuilder\Installer\Database($application);
+                $database->updateBackBuilderSchema();
                 $database->updateBundlesSchema();
             } catch (\Exception $e) {
                 echo $e->getMessage();
@@ -223,7 +224,7 @@ switch ($step) {
             $yaml = new \Symfony\Component\Yaml\Yaml();
 
             $sites = [
-                \BackBee\Utils\String::urlize($_POST['site_name']) => [
+                \BackBuilder\Util\String::urlize($_POST['site_name']) => [
                     'label'  => $_POST['site_name'],
                     'domain' => $_POST['domain'],
                 ]
@@ -231,7 +232,7 @@ switch ($step) {
 
             file_put_contents(dirname(__DIR__) . '/repository/Config/sites.yml', $yaml->dump($sites));
 
-            $application = new \BackBee\Standard\Application();
+            $application = new \BackBuilder\BBApplication();
 
             $em = $application->getEntityManager();
 
@@ -239,17 +240,17 @@ switch ($step) {
 
             foreach ($sites as $label => $siteconfig) {
                 // Création d'un site
-                if (null === $site = $em->find('BackBee\Site\Site', md5($label))) {
-                    $site = new \BackBee\Site\Site(md5($label));
+                if (null === $site = $em->find('BackBuilder\Site\Site', md5($label))) {
+                    $site = new \BackBuilder\Site\Site(md5($label));
                     $site->setLabel($label)
                          ->setServerName($siteconfig['domain'])
                     ;
                     $em->persist($site);
                 }
                 // Home layout
-                if (null === $layout = $em->find('BackBee\Site\Layout', md5('defaultlayout-' . $label))) {
-                    $defaultlayout = $em->find('BackBee\Site\Layout', '7e7d57b47beb1f326a72726dca6df9dd');
-                    $layout = new \BackBee\Site\Layout(md5('defaultlayout-' . $label));
+                if (null === $layout = $em->find('BackBuilder\Site\Layout', md5('defaultlayout-' . $label))) {
+                    $defaultlayout = $em->find('BackBuilder\Site\Layout', '7e7d57b47beb1f326a72726dca6df9dd');
+                    $layout = new \BackBuilder\Site\Layout(md5('defaultlayout-' . $label));
                     $layout->setData($defaultlayout->getData())
                         ->setLabel('Home')
                         ->setPath('Home.twig')
@@ -260,8 +261,8 @@ switch ($step) {
                 }
 
                 // Article's layout
-                if (null === $articleLayout = $em->find('BackBee\Site\Layout', md5('articlelayout-' . $label))) {
-                    $articleLayout = new BackBee\Site\Layout(md5('articlelayout-' . $label));
+                if (null === $articleLayout = $em->find('BackBuilder\Site\Layout', md5('articlelayout-' . $label))) {
+                    $articleLayout = new BackBuilder\Site\Layout(md5('articlelayout-' . $label));
                     $articleLayout->setData('{"templateLayouts":[{"title":"Layout : 12 col(s)","layoutSize":{"height":300,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1332943638139_1","layoutClass":"bb4ResizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":5,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","position":"none","height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":true,"accept":[""],"maxentry":"0","defaultClassContent":"article"},{"title":"Nouvelle zone","layoutSize":{"height":800,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1383430750637_1","layoutClass":"bb5-resizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":2,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","alphaClass":"alpha","omegaClass":"omega","typeClass":"hChild","clearAfter":1,"height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":false,"accept":[],"maxentry":0,"defaultClassContent":null}]}')
                         ->setLabel('Article')
                         ->setPicPath($articleLayout->getUid() . '.png')
@@ -271,14 +272,14 @@ switch ($step) {
                 }
 
                 // Creating site root page
-                if (null === $root = $em->find('BackBee\NestedNode\Page', md5('root-' . $label))) {
-                    $block_demo = new \BackBee\ClassContent\block_demo();
-                    $block_demo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                if (null === $root = $em->find('BackBuilder\NestedNode\Page', md5('root-' . $label))) {
+                    $block_demo = new \BackBuilder\ClassContent\block_demo();
+                    $block_demo->setState(\BackBuilder\ClassContent\AClassContent::STATE_NORMAL);
                     $block_demo->setRevision(1);
-                    $home_container = new \BackBee\ClassContent\home\home_container();
-                    $home_container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $home_container = new \BackBuilder\ClassContent\home\home_container();
+                    $home_container->setState(\BackBuilder\ClassContent\AClassContent::STATE_NORMAL);
                     $home_container->setRevision(1);
-                    $home_container->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $home_container->container->setState(\BackBuilder\ClassContent\AClassContent::STATE_NORMAL);
                     $home_container->container->setRevision(1);
                     $home_container->container->push($block_demo);
                     $pagebuilder->setUid(md5('root-' . $label))
@@ -295,16 +296,16 @@ switch ($step) {
                     $em->flush($page);
                 }
                 // Creating mediacenter root
-                if (null === $mediafolder = $em->find('BackBee\NestedNode\MediaFolder', md5('media'))) {
-                    $mediafolder = new \BackBee\NestedNode\MediaFolder(md5('media'));
+                if (null === $mediafolder = $em->find('BackBuilder\NestedNode\MediaFolder', md5('media'))) {
+                    $mediafolder = new \BackBuilder\NestedNode\MediaFolder(md5('media'));
                     $mediafolder->setTitle('Mediacenter')->setUrl('/');
                     $em->persist($mediafolder);
                 }
                 $em->flush();
             }
 
-            if (null === $em->find('BackBee\NestedNode\KeyWord', md5('root'))) {
-                $keyword = new \BackBee\NestedNode\KeyWord(md5('root'));
+            if (null === $em->find('BackBuilder\NestedNode\KeyWord', md5('root'))) {
+                $keyword = new \BackBuilder\NestedNode\KeyWord(md5('root'));
                 $keyword->setRoot($keyword);
                 $keyword->setKeyWord('root');
                 $em->persist($keyword);
@@ -318,8 +319,8 @@ switch ($step) {
 
     case 1:
     default:
-        $backbee_requirements = new BackBeeRequirements();
-        $requirements = $backbee_requirements->getRequirements();
+        $BackBuilder_requirements = new BackBeeRequirements();
+        $requirements = $BackBuilder_requirements->getRequirements();
 }
 
 ?>
@@ -330,7 +331,7 @@ switch ($step) {
     <head>
         <meta charset="utf-8">
 
-        <title>BackBee standard installation</title>
+        <title>BackBuilder standard installation</title>
         <!--<meta name="description" content="The HTML5 Herald">
         <meta name="author" content="SitePoint">-->
 
@@ -380,15 +381,15 @@ switch ($step) {
             <div class="cover-container">
                 <div class="inner cover">
                     <div class="cover-header">
-                        <h1 class="masthead-brand"><img src="img/logo.png" alt="BackBee"> Installer</h1>
+                        <h1 class="masthead-brand"><img src="img/logo.png" alt="BackBuilder"> Installer</h1>
                     </div>
 
                     <?php if (1 === $step): ?>
                         <div class="cover-body">
                             <div class="welcome">
-                                <h2 class="welcome-heading">Welcome to <span>BackBee Installation</span></h2>
+                                <h2 class="welcome-heading">Welcome to <span>BackBuilder Installation</span></h2>
 
-                                <p>In order to install BackBee properly, we need to check if your system fulfills all the requirements.</p>
+                                <p>In order to install BackBuilder properly, we need to check if your system fulfills all the requirements.</p>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -525,19 +526,19 @@ switch ($step) {
                         <p>Example of nginx virtual host:</p>
                         <?php $site = array_shift($sites); ?>
                         <pre>
-# example of nginx virtual host for BackBee project
+# example of nginx virtual host for BackBuilder project
 server {
     listen 80;
 
     server_name <?php echo $site['domain']; ?>;
     root <?php echo __DIR__ . '/'; ?>;
 
-    error_log /var/log/nginx/<?php echo \BackBee\Utils\String::urlize($site['label']); ?>.error.log;
-    access_log /var/log/nginx/<?php echo \BackBee\Utils\String::urlize($site['label']); ?>.access.log;
+    error_log /var/log/nginx/<?php echo \BackBuilder\Util\String::urlize($site['label']); ?>.error.log;
+    access_log /var/log/nginx/<?php echo \BackBuilder\Util\String::urlize($site['label']); ?>.access.log;
 
     location ~ /resources/(.*) {
         alias <?php echo dirname(__DIR__) . '/'; ?>;
-        try_files /BackBee/Resources/$1 /repository/Resources/$1 break;
+        try_files /BackBuilder/Resources/$1 /repository/Resources/$1 break;
     }
 
     location ~ /(css|fonts|img)/(.*) {
@@ -555,7 +556,7 @@ server {
 }</pre>
                     <p>Example of apache2 virtual host:</p>
                     <pre>
-# example of apache2 virtual host for BackBee project
+# example of apache2 virtual host for BackBuilder project
 &lt;VirtualHost *:80&gt;
     ServerName <?php echo $site['domain']; ?>
 
@@ -566,8 +567,8 @@ server {
     RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
     RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
 
-    RewriteCond %{DOCUMENT_ROOT}/../BackBee/Resources/$1 -f
-    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../BackBee/Resources/$1 [L]
+    RewriteCond %{DOCUMENT_ROOT}/../BackBuilder/Resources/$1 -f
+    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../BackBuilder/Resources/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 -f
     RewriteRule ^/images/([a-f0-9]{3})/([a-f0-9]{29})/(.*)\.([^\.]+)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 [L]

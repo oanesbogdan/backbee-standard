@@ -8,7 +8,7 @@ article:
         forbiden-actions: []
     elements:
         title:
-            type: BackBee\ClassContent\Element\text
+            type: BackBuilder\ClassContent\Element\text
             label: Title
             default:
                 value: Your title here...
@@ -17,7 +17,7 @@ article:
                 aloha: !!scalar lite
                 editable: !!boolean true
         title_alt:
-            type: BackBee\ClassContent\Element\text
+            type: BackBuilder\ClassContent\Element\text
             label: Alternative title
             maxentry: 1
             parameters:
@@ -25,7 +25,7 @@ article:
                 editable: !!boolean true
         permid: !!scalar
         abstract:
-            type: BackBee\ClassContent\Element\text
+            type: BackBuilder\ClassContent\Element\text
             label: Abstract
             default:
                 value: Your abstract here...
@@ -34,18 +34,18 @@ article:
                 aloha: !!scalar lite
                 editable: !!boolean true
         body:
-            type: BackBee\ClassContent\article\body
+            type: BackBuilder\ClassContent\article\body
         image:
-            type: BackBee\ClassContent\Media\image
+            type: BackBuilder\ClassContent\Media\image
         image_alt:
-            type: BackBee\ClassContent\Media\image
+            type: BackBuilder\ClassContent\Media\image
             label: Alternative image
         keywords:
-            type: BackBee\ClassContent\Element\keyword
+            type: BackBuilder\ClassContent\Element\keyword
             label: Keywords
             maxentry: 0
         related:
-            type: BackBee\ClassContent\article\related
+            type: BackBuilder\ClassContent\article\related
         signature: !!scalar
         permid: !!scalar
     parameters:

@@ -5,7 +5,7 @@ paragraph:
         category: [article]
     elements:
         body:
-            type: BackBee\ClassContent\Element\text
+            type: BackBuilder\ClassContent\Element\text
             label: paragraph container
             default:
                 value: Your text here...

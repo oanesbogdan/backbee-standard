@@ -1,6 +1,6 @@
 <?php
 
-namespace BackBee\Renderer\Helper;
+namespace BackBuilder\Renderer\Helper;
 
 class navbar extends AHelper
 {
@@ -8,7 +8,7 @@ class navbar extends AHelper
     public function __invoke($mode = null)
     {
         $application = $this->_renderer->getApplication();
-        $repository = $application->getEntityManager()->getRepository('BackBee\NestedNode\Page');
+        $repository = $application->getEntityManager()->getRepository('BackBuilder\NestedNode\Page');
 
         $sections = [];
         $articles = [];
@@ -27,8 +27,8 @@ class navbar extends AHelper
                     ];
 
                     $articles[$page->getUid()] = $application->getEntityManager()
-                        ->getRepository('BackBee\ClassContent\AClassContent')
-                        ->getSelection($selector, false, true, 0, 3, true, false, ['BackBee\ClassContent\article'])
+                        ->getRepository('BackBuilder\ClassContent\AClassContent')
+                        ->getSelection($selector, false, true, 0, 3, true, false, ['BackBuilder\ClassContent\article'])
                     ;
                 }
             }

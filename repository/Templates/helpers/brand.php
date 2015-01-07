@@ -1,5 +1,5 @@
 <?php
-namespace BackBee\Renderer\Helper;
+namespace BackBuilder\Renderer\Helper;
 
 /**
  * @author e.chau <eric.chau@lp-digital.fr>

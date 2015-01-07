@@ -6,7 +6,7 @@ home_container:
         forbiden-actions: []
     elements:
         container:
-            type: BackBee\ClassContent\container\one_column
+            type: BackBuilder\ClassContent\container\one_column
     parameters:
         container_title: !!scalar
         container_bottom: !!scalar

@@ -1,2 +1,2 @@
 # bundles configuration
-demo: BackBee\Bundle\DemoBundle\Demo
+demo: BackBuilder\Bundle\DemoBundle\Demo

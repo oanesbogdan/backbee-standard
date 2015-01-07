@@ -9,5 +9,5 @@ require $autoloadFile;
 $context = null;
 $environment = null;
 
-$application = new \BackBee\Standard\Application($context, $environment);
+$application = new \BackBuilder\BBApplication($context, $environment);
 $application->start();
