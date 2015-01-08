@@ -30,3 +30,6 @@ $~ php -S mydomain.dev:8000
 In your web browser, access [http://mydomain.dev:8000](http://mydomain.dev:8000) and follow
  the installation instructions.
 
+### Disclaimer
+
+This is a very early version of packaged BackBee CMS and this package should not be used in production.
