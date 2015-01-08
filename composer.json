@@ -11,12 +11,43 @@
         }
     ],
     "require": {
-        "backbee/backbee": "dev-master"
+        "php": ">=5.4.0",
+        "backbee/backbee": "dev-master",
+        "backbee/script-handler": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "BackBee\\Standard\\": ""
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildParameters",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildBackBeeStructure",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
+        ],
+        "post-update-cmd": [
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildParameters",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildBackBeeStructure",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
+        ]
+    },
+    "extra": {
+        "backbee-cache-dir": "cache",
+        "backbee-log-dir": "log",
+        "backbee-data-dir": "./repository/Data",
+        "backbee-data-media-dir": "Media",
+        "backbee-data-storage-dir": "Storage",
+        "backbee-data-tmp-dir": "Tmp",
+        "incenteev-parameters": [
+            {
+                "file": "repository/Config/parameters.yml"
+            }
+        ]
     },
     "minimum-stability": "dev"
 }

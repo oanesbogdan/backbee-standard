@@ -1,0 +1,19 @@
+# BackBee parameters
+parameters:
+    debug: true
+
+    # container configuration
+    container_dump_directory: ~
+
+    # cache configuration
+    cache_autogenerate: true
+
+    # database configuration
+    database_driver:    pdo_mysql
+    database_host:      127.0.0.1
+    database_port:      3306
+    database_dbname:    backbee
+    database_user:      root
+    database_password:  ~
+    database_charset:   utf8
+    database_collation: utf8_general_ci
