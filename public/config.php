@@ -245,7 +245,12 @@ switch ($step) {
                          ->setServerName($siteconfig['domain'])
                     ;
                     $em->persist($site);
+                    $em->flush($site);
+
                 }
+
+                $application->getContainer()->set('site', $site);
+
                 // Home layout
                 if (null === $layout = $em->find('BackBee\Site\Layout', md5('defaultlayout-' . $label))) {
                     $defaultlayout = $em->find('BackBee\Site\Layout', '7e7d57b47beb1f326a72726dca6df9dd');
@@ -272,6 +277,18 @@ switch ($step) {
 
                 // Creating site root page
                 if (null === $root = $em->find('BackBee\NestedNode\Page', md5('root-' . $label))) {
+                    $pagebuilder->setUid(md5('root-' . $label))
+                        ->setTitle('Home')
+                        ->setLayout($layout)
+                        ->setSite($site)
+                        ->setUrl('/')
+                        ->putOnlineAndHidden()
+                    ;
+
+                    $page = $pagebuilder->getPage();
+                    $em->persist($page);
+                    $em->flush($page);
+
                     $block_demo = new \BackBee\ClassContent\block_demo();
                     $block_demo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
                     $block_demo->setRevision(1);
@@ -281,26 +298,16 @@ switch ($step) {
                     $home_container->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
                     $home_container->container->setRevision(1);
                     $home_container->container->push($block_demo);
-                    $pagebuilder->setUid(md5('root-' . $label))
-                        ->setTitle('Home')
-                        ->setLayout($layout)
-                        ->setSite($site)
-                        ->setUrl('/')
-                        ->putOnlineAndHidden()
-                        ->pushElement($home_container);
-                    ;
-
-                    $page = $pagebuilder->getPage();
-                    $em->persist($page);
-                    $em->flush($page);
+                    $page->getContentSet()->first()->push($home_container);
                 }
+
                 // Creating mediacenter root
                 if (null === $mediafolder = $em->find('BackBee\NestedNode\MediaFolder', md5('media'))) {
                     $mediafolder = new \BackBee\NestedNode\MediaFolder(md5('media'));
                     $mediafolder->setTitle('Mediacenter')->setUrl('/');
                     $em->persist($mediafolder);
                 }
-                $em->flush();
+
             }
 
             if (null === $em->find('BackBee\NestedNode\KeyWord', md5('root'))) {
@@ -308,9 +315,9 @@ switch ($step) {
                 $keyword->setRoot($keyword);
                 $keyword->setKeyWord('root');
                 $em->persist($keyword);
-                $em->flush();
             }
 
+            $em->flush();
             $step = 5;
         }
 
