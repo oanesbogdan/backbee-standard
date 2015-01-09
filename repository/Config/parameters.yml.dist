@@ -17,3 +17,6 @@ parameters:
     database_password:  ~
     database_charset:   utf8
     database_collation: utf8_general_ci
+
+    # secret key configuration
+    secret_key: ThisSecretKeyMustBeChanged

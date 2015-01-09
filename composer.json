@@ -26,6 +26,7 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBackBeeStructure",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
         ],
         "post-update-cmd": [
@@ -33,16 +34,16 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBackBeeStructure",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
+            "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
         ]
     },
     "extra": {
+        "prompt": true,
+        "generate-structure": true,
         "backbee-cache-dir": "cache",
         "backbee-log-dir": "log",
         "backbee-data-dir": "./repository/Data",
-        "backbee-data-media-dir": "Media",
-        "backbee-data-storage-dir": "Storage",
-        "backbee-data-tmp-dir": "Tmp",
         "incenteev-parameters": [
             {
                 "file": "repository/Config/parameters.yml"
