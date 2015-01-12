@@ -561,14 +561,13 @@ server {
     ServerName <?php echo $site['domain']; ?>
 
     DocumentRoot <?php echo __DIR__ . '/'; ?>
-
     RewriteEngine On
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
-    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
+    RewriteRule ^/ressources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../BackBuilder/Resources/$1 -f
-    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../BackBuilder/Resources/$1 [L]
+    RewriteRule ^/ressources/(.*)$ %{DOCUMENT_ROOT}/../BackBuilder/Resources/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 -f
     RewriteRule ^/images/([a-f0-9]{3})/([a-f0-9]{29})/(.*)\.([^\.]+)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 [L]
@@ -577,10 +576,10 @@ server {
     RewriteRule ^/images/([a-f0-9]{3})/([a-f0-9]{29})/(.*)\.([^\.]+)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1/$2.$4 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 -f
-    RewriteRule ^images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 [L]
+    RewriteRule ^/images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Media/$1 -f
-    RewriteRule ^images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1 [L]
+    RewriteRule ^/images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1 [L]
 &lt;/VirtualHost&gt;
                     </pre>
 
