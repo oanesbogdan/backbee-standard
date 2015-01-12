@@ -1,0 +1,29 @@
+config:
+  adapter: aloha
+  mainNodeClass: .bb5-content 
+  inlineContentClass: .contentAloha
+  editContentClass: ""
+  fieldPrefix: data-aloha
+
+aloha:
+  plugins: []
+  settings: []
+
+  customconf:
+    all:
+      plugins: []
+      pluginsconf:
+        format:
+          config: ['b', 'i', 'p', 'sub', 'sup', 'del', 'title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'removeFormat', 'table']
+
+    lite:
+      plugins: []
+      pluginsconf:
+        format:
+          config: ['p','title', 'h1', 'h2', 'h3', 'h4']
+
+    paragraph:
+      plugins: ['common/format', 'extra/formatlesspaste']
+      pluginsconf:
+        format:
+          config: ['b', 'i', 'sup', 'sub', 'p','title', 'h3']
