@@ -17,7 +17,7 @@ In Debian-like environements, you only need to update your ``/etc/hosts`` file:
 Then execute this composer project creation command:
 
 ```bash
-$~ composer create-project "backbee/backbee-standard" /path/to/your/folder v0.11
+$~ composer create-project "backbee/backbee-standard" /path/to/your/folder v0.11.1
 ```
 
 Then lauch the PHP builtin web server inside the ``public`` directory:
@@ -27,7 +27,7 @@ $~ cd /path/to/your/folder/public
 $~ php -S mydomain.dev:8000
 ```
 
-In your web browser, access [http://mydomain.dev:8000](http://mydomain.dev:8000) and follow
+In your web browser, access [http://mydomain.dev:8000/install.php](http://mydomain.dev:8000/install/php) and follow
  the installation instructions.
 
 ### Disclaimer
