@@ -2,6 +2,7 @@
 cache/*
 log/*
 vendor/*
+bundle/ToolbarBundle/*
 
 bootstrap.yml
 composer.lock
