@@ -544,10 +544,14 @@ server {
 
     location ~ /resources/(.*) {
         alias <?php echo dirname(__DIR__) . '/'; ?>;
-        try_files /BackBee/Resources/$1 /repository/Resources/$1 break;
+        try_files /repository/Resources/$1 /vendor/backbee/ToolbarBundle/Resources/$1 /vendor/backbee/backbee/Resources/$1 break;
     }
 
     location ~ /(css|fonts|img)/(.*) {
+        try_files $uri @rewriteapp;
+    }
+
+    location / {
         try_files $uri @rewriteapp;
     }
 
@@ -573,8 +577,8 @@ server {
     RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
     RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
 
-    RewriteCond %{DOCUMENT_ROOT}/../BackBee/Resources/$1 -f
-    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../BackBee/Resources/$1 [L]
+    RewriteCond %{DOCUMENT_ROOT}/../vendor/backbee/backbee/Resources/$1 -f
+    RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../vendor/backbee/backbee/Resources/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 -f
     RewriteRule ^/images/([a-f0-9]{3})/([a-f0-9]{29})/(.*)\.([^\.]+)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1/$2.$4 [L]
