@@ -1,5 +1,5 @@
 <?php
-namespace BackBee\Bundle\DemoBundle;
+namespace BackBuilder\Bundle\DemoBundle;
 
 /*
  * Copyright (c) 2011-2013 Lp digital system
@@ -20,8 +20,8 @@ namespace BackBee\Bundle\DemoBundle;
  * along with BackBee5. If not, see <http://www.gnu.org/licenses/>.
  */
 
-use BackBee\IApplication;
-use BackBee\Bundle\AbstractBaseBundle;
+use BackBuilder\IApplication;
+use BackBuilder\Bundle\AbstractBaseBundle;
 
 /**
  *
