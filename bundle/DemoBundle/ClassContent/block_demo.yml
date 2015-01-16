@@ -5,7 +5,7 @@ block_demo:
         category: [Demo]
     elements:
         text:
-            type: BackBee\ClassContent\Element\text
+            type: BackBuilder\ClassContent\Element\text
             default:
                 value: This is a random field you can edit...
             maxentry: 1
