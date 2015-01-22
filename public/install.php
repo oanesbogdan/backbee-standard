@@ -574,6 +574,13 @@ server {
 
     RewriteEngine On
 
+    &lt;Directory <?php echo str_replace('public', '', __DIR__); ?> &gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    &lt;/Directory&gt;
+
     RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
     RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
 
