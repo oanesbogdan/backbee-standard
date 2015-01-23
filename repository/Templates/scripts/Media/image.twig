@@ -1,5 +1,5 @@
 {% if this.isBBUser() == true or image.path != '' %}
-	<figure {{ this.bb5content({'class': 'figure'})|raw }}>
+	<figure {{ this.bb5content(null, {'class': 'figure'})|raw }}>
 		<img {{ this.bb5content(image)|raw }}
 			src="{{ this.getImageUrl(image.path)|raw }}"
 			alt="{{ title }}" style="width: 100%" itemprop="contentURL">
