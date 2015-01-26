@@ -1,4 +1,4 @@
-one_column:
+OneColumn:
   extends: \BackBee\ClassContent\ContentSet
   properties:
     name: One column

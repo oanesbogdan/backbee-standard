@@ -1,4 +1,4 @@
-related:
+Related:
   extends: \BackBee\ClassContent\ContentSet
   properties:
     name: Linked articles
@@ -7,4 +7,4 @@ related:
     clonemode: inherited
   parameters:
     rendermode: !!scalar related
-    accept: !!string BackBee\ClassContent\article
+    accept: !!string BackBee\ClassContent\Article

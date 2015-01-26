@@ -1,4 +1,4 @@
-article:
+Article:
     properties:
         name: Article
         description: "An article contains title, author, abstract, main image and a body"
@@ -34,18 +34,18 @@ article:
                 aloha: !!scalar lite
                 editable: !!boolean true
         body:
-            type: BackBee\ClassContent\article\body
+            type: BackBee\ClassContent\Article\Body
         image:
-            type: BackBee\ClassContent\Media\image
+            type: BackBee\ClassContent\Media\Image
         image_alt:
-            type: BackBee\ClassContent\Media\image
+            type: BackBee\ClassContent\Media\Image
             label: Alternative image
         keywords:
             type: BackBee\ClassContent\Element\keyword
             label: Keywords
             maxentry: 0
         related:
-            type: BackBee\ClassContent\article\related
+            type: BackBee\ClassContent\Article\Related
         signature: !!scalar
         permid: !!scalar
     parameters:
