@@ -292,7 +292,7 @@ switch ($step) {
                     $block_demo = new \BackBee\ClassContent\block_demo();
                     $block_demo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
                     $block_demo->setRevision(1);
-                    $home_container = new \BackBee\ClassContent\home\home_container();
+                    $home_container = new \BackBee\ClassContent\Home\HomeContainer();
                     $home_container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
                     $home_container->setRevision(1);
                     $home_container->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);

@@ -1,4 +1,4 @@
-home_container:
+HomeContainer:
     properties:
         name: home container
         description: ""
@@ -6,7 +6,7 @@ home_container:
         forbiden-actions: []
     elements:
         container:
-            type: BackBee\ClassContent\container\one_column
+            type: BackBee\ClassContent\Container\OneColumn
     parameters:
         container_title: !!scalar
         container_bottom: !!scalar

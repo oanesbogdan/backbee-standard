@@ -1,4 +1,4 @@
-body:
+Body:
   extends: \BackBee\ClassContent\ContentSet
   properties:
     category: [!Article]
