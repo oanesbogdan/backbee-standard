@@ -3,6 +3,7 @@ cache/*
 log/*
 vendor/*
 
+repository/Data/*
 bootstrap.yml
 composer.lock
 doctrine.yml
