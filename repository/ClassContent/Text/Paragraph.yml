@@ -2,14 +2,13 @@ Paragraph:
     properties:
         name: Paragraph
         description: Paragraph
-        category: [article]
+        category: [Article]
     elements:
         body:
-            type: BackBee\ClassContent\Element\text
+            type: BackBee\ClassContent\Element\Text
             label: paragraph container
             default:
                 value: Your text here...
             maxentry: 1
             parameters:
-                aloha: !!scalar paragraph
-                editable: !!boolean true
+                rte: paragraph

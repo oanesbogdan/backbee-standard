@@ -289,16 +289,16 @@ switch ($step) {
                     $em->persist($page);
                     $em->flush($page);
 
-                    $block_demo = new \BackBee\ClassContent\block_demo();
-                    $block_demo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
-                    $block_demo->setRevision(1);
-                    $home_container = new \BackBee\ClassContent\Home\HomeContainer();
-                    $home_container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
-                    $home_container->setRevision(1);
-                    $home_container->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
-                    $home_container->container->setRevision(1);
-                    $home_container->container->push($block_demo);
-                    $page->getContentSet()->first()->push($home_container);
+                    $blockDemo = new \BackBee\ClassContent\BlockDemo();
+                    $blockDemo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $blockDemo->setRevision(1);
+                    $homeContainer = new \BackBee\ClassContent\Home\HomeContainer();
+                    $homeContainer->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $homeContainer->setRevision(1);
+                    $homeContainer->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $homeContainer->container->setRevision(1);
+                    $homeContainer->container->push($blockDemo);
+                    $page->getContentSet()->first()->push($homeContainer);
                 }
 
                 // Creating mediacenter root
