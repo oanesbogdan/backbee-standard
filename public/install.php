@@ -205,8 +205,7 @@ switch ($step) {
                 ");
 
 
-                $em->getConnection()->exec("REPLACE INTO `user` (`id`, `login`, `password`, `activated`, `created`, `modified`) VALUES ('', 'admin', '" . md5('admin') . "', 1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());");
-                $em->getConnection()->exec("UPDATE `user` SET `id` = 1 WHERE `login` = 'admin'");
+                $em->getConnection()->exec("REPLACE INTO `user` (`id`, `login`, `password`, `activated`, `created`, `modified`) VALUES (1, 'admin', '" . md5('admin') . "', 1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());");
             } catch (\Exception $e) {
                 echo $e->getMessage();
                 die;
