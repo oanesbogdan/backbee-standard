@@ -3,26 +3,26 @@ Image:
         name: Media image
         description: A media image
         labelized-by: title->value
-        category: [media]
+        category: [Media]
     elements:
         title:
-            type: BackBee\ClassContent\Element\text
+            type: BackBee\ClassContent\Element\Text
             label: Titre
             maxentry: 1
             default:
                 value: ""
         description:
-            type: BackBee\ClassContent\Element\text
+            type: BackBee\ClassContent\Element\Text
             label: Description
             maxentry: 1
             default:
                 value: ""
         copyrights:
-            type: BackBee\ClassContent\Element\text
+            type: BackBee\ClassContent\Element\Text
             label: Copyrights
             maxentry: 1
             default:
                 value: "Picture credits: author name/source"
         image:
-            type: BackBee\ClassContent\Element\image
+            type: BackBee\ClassContent\Element\Image
             label: Image

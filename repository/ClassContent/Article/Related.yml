@@ -6,5 +6,5 @@ Related:
     category: [Article]
     clonemode: inherited
   parameters:
-    rendermode: !!scalar related
-    accept: !!string BackBee\ClassContent\Article
+    rendermode: related
+    accept: [BackBee\ClassContent\Article]
