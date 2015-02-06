@@ -1,4 +1,4 @@
-<ul {{ this.bb5content(null)|raw }}>
+<ul {{ this.bbcontent(null)|raw }}>
     {% for article in this.getObject().getData() %}
         {{ this.render(article, 'related')|raw }}
     {% endfor %}
