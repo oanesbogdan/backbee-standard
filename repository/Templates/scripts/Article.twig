@@ -8,7 +8,7 @@
             {% endfor %}
         </p>
 
-        <h1 itemprop="headline" class="title-article" {{ this.bb5content(title)|raw }}>
+        <h1 itemprop="headline" class="title-article" {{ this.bbcontent(title)|raw }}>
             {{ title.value|raw }}
         </h1>
 
@@ -41,7 +41,7 @@
             {{ this.render(image, null, {'crop': 'big'})|raw }}
         </div>
 
-        <h2 {{ this.bb5content(abstract, {'class': 'title-chapo'})|raw }} itemprop="description">{{ abstract.value|raw }}</h2>
+        <h2 {{ this.bbcontent(abstract, {'class': 'title-chapo'})|raw }} itemprop="description">{{ abstract.value|raw }}</h2>
     </header>
 
     {{ this.render(body)|raw }}
