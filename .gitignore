@@ -3,8 +3,10 @@ cache/*
 log/*
 vendor/*
 bundle/ToolbarBundle/*
+repository/Resources/toolbar/*
 
 bootstrap.yml
 composer.lock
 doctrine.yml
+services.yml
 sites.yml

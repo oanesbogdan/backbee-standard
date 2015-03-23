@@ -10,9 +10,24 @@
             "email": "eric.chau@lp-digital.fr"
         }
     ],
+     "repositories": [
+        {
+            "type":"package",
+            "package": {
+                "name": "backbee/client-js",
+                "description": "Javascript client for BackBee CMS",
+                "version": "dev-master",
+                "dist": {
+                    "url": "https://github.com/backbee/BbCoreJs/archive/master.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "backbee/backbee": "dev-master",
+        "backbee/client-js": "dev-master",
         "backbee/script-handler": "dev-master",
         "backbee/demo-bundle": "dev-master",
         "backbee/toolbar-bundle": "dev-master"
@@ -29,7 +44,8 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
-            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall",
+            "BackBee\\Standard\\Composer\\ScriptHandler::moveClient"
         ],
         "post-update-cmd": [
             "BackBee\\Standard\\Composer\\ScriptHandler::buildParameters",
@@ -37,7 +53,8 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
-            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall",
+            "BackBee\\Standard\\Composer\\ScriptHandler::moveClient"
         ]
     },
     "extra": {
