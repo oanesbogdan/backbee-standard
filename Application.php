@@ -25,6 +25,7 @@ use BackBee\BBApplication;
 
 /**
  * @author e.chau <eric.chau@lp-digital.fr>
+ * @author Mickaël Andrieu <mickael.andrieu@lp-digital.fr>
  */
 class Application extends BBApplication
 {
@@ -34,5 +35,16 @@ class Application extends BBApplication
     public function getBaseDir()
     {
         return __DIR__;
+    }
+
+    /**
+     * Check if the CMS is installed
+     */
+    public function isIntalled()
+    {
+        return is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'sites.yml')
+            && is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'doctrine.yml')
+            && is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'bootstrap.yml')
+        ;
     }
 }
