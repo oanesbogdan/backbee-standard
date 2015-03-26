@@ -21,10 +21,12 @@
 
 namespace BackBee\Standard;
 
+use BackBee\BBApplication;
+
 /**
  * @author e.chau <eric.chau@lp-digital.fr>
  */
-class Application extends \BackBee\BBApplication
+class Application extends BBApplication
 {
     /**
      * {@inheritdoc}

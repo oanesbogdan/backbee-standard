@@ -19,6 +19,9 @@
  * along with BackBee. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @author Eric Chau <eric.chau@lp-digital.fr>
+ */
 class Requirement
 {
     /**
@@ -39,17 +42,17 @@ class Requirement
     /**
      * @var string
      */
-    private $error_message;
+    private $errorMessage;
 
     /**
      * Requirement's constructor
      */
-    public function __construct($expected, $value, $title, $error_message)
+    public function __construct($expected, $value, $title, $errorMessage)
     {
         $this->expected = $expected;
         $this->value = $value;
         $this->title = $title;
-        $this->error_message = $error_message;
+        $this->errorMessage = $errorMessage;
     }
 
     /**
@@ -73,10 +76,13 @@ class Requirement
      */
     public function getErrorMessage()
     {
-        return $this->error_message;
+        return $this->errorMessage;
     }
 }
 
+/**
+ * @author Eric Chau <eric.chau@lp-digital.fr>
+ */
 class BackBeeRequirements
 {
     const REQUIRED_PHP_VERSION = '5.4.0';
@@ -102,26 +108,29 @@ class BackBeeRequirements
             'You have to install BackBee\'s dependencies by running `composer.phar install` (https://getcomposer.org/)'
         );
 
-        $cache_directory = realpath(__DIR__ . '/..') . '/cache';
+        $cacheDirectory = realpath(__DIR__ . '/..') . '/cache';
         $requirements[] = new Requirement(
             true,
-            is_dir($cache_directory) && is_writable($cache_directory) && is_readable($cache_directory),
+            is_dir($cacheDirectory) && is_writable($cacheDirectory) && is_readable($cacheDirectory),
             'Cache folder - readable and writable',
-            "BackBee expected cache directory at `$cache_directory`; this directory must be readable and writable"
+            "BackBee expected cache directory at `$cacheDirectory`; this directory must be readable and writable"
         );
 
-        $log_directory = realpath(__DIR__ . '/..') . '/log';
+        $logDirectory = realpath(__DIR__ . '/..') . '/log';
         $requirements[] = new Requirement(
             true,
-            is_dir($log_directory) && is_writable($log_directory) && is_readable($log_directory),
+            is_dir($logDirectory) && is_writable($logDirectory) && is_readable($logDirectory),
             'Log folder - readable and writable',
-            "BackBee expected log directory at `$log_directory`; this directory must be readable and writable"
+            "BackBee expected log directory at `$logDirectory`; this directory must be readable and writable"
         );
 
         return $requirements;
     }
 }
 
+/**
+ * @author Eric Chau <eric.chau@lp-digital.fr>
+ */
 class BootstrapRequirements
 {
     /**
@@ -131,12 +140,12 @@ class BootstrapRequirements
     {
         $requirements = [];
 
-        $config_directory = dirname(__DIR__) . '/repository/Config';
+        $configDirectory = dirname(__DIR__) . '/repository/Config';
         $requirements[] = new Requirement(
             true,
-            is_dir($config_directory) && is_readable($config_directory) && is_writable($config_directory),
+            is_dir($configDirectory) && is_readable($configDirectory) && is_writable($configDirectory),
             'Project config directory - writable and readable',
-            "BackBee expected project config directory at `$config_directory`; this directory must be readable and writable"
+            "BackBee expected project config directory at `$configDirectory`; this directory must be readable and writable"
         );
 
         return $requirements;
