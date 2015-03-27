@@ -1,5 +1,6 @@
 <?php
 
+
 if (!isset($_SERVER['HTTP_HOST'])) {
     exit('This script cannot be run from the CLI. Run it from a browser.');
 }
@@ -245,9 +246,13 @@ switch ($step) {
                     ->generateRandomApiKey()
                 ;
 
-
                 $entityManager->persist($adminUser);
                 $entityManager->flush($adminUser);
+
+                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml');
+                $security['sudoers'] = [$adminUser->getLogin() => $adminUser->getId()];
+                file_put_contents(dirname(__DIR__) . '/repository/Config/security.yml', $yaml->dump($security));
+
             } catch (\Exception $e) {
                 // to be catched by Debug component
             }
@@ -362,6 +367,18 @@ switch ($step) {
 
             $em->flush();
             $step = 5;
+
+            $groups = \Symfony\Component\Yaml\Yaml::parse(__DIR__ . '/groups.yml');
+
+            foreach ($groups as $groupName => $rights) {
+                $group = new \BackBee\Security\Group();
+                $group->setName($groupName);
+                $group->setSite($site);
+                $em->persist($group);
+                $em->flush($group);
+
+                setSiteGroupRights($site, $group, $rights);
+            }
         }
 
         break;
@@ -370,6 +387,318 @@ switch ($step) {
     default:
         $backbeeRequirements = new BackBeeRequirements();
         $requirements = $backbeeRequirements->getRequirements();
+}
+
+function setSiteGroupRights($site, $group, $rights)
+{
+    $application = new \BackBee\Standard\Application();
+    $em = $application->getEntityManager();
+    $aclProvider = $application->getSecurityContext()->getACLProvider();
+    $securityIdentity = new \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity($group->getObjectIdentifier(), 'BackBee\Security\Group');
+
+    if (true === array_key_exists('sites', $rights)) {
+        $sites = addSiteRights($rights['sites'], $aclProvider, $securityIdentity, $site);
+
+        if (true === array_key_exists('layouts', $rights)) {
+            addLayoutRights($rights['layouts'], $aclProvider, $securityIdentity, $site, $em);
+        }
+
+        if (true === array_key_exists('pages', $rights)) {
+            addPageRights($rights['pages'], $aclProvider, $securityIdentity);
+        }
+
+        if (true === array_key_exists('mediafolders', $rights)) {
+            addFolderRights($rights['mediafolders'], $aclProvider, $securityIdentity);
+        }
+
+        if (true === array_key_exists('contents', $rights)) {
+            addContentRights($rights['contents'], $aclProvider, $securityIdentity);
+        }
+
+        if (true === array_key_exists('bundles', $rights)) {
+            addBundleRights($rights['bundles'], $aclProvider, $securityIdentity, $application);
+        }
+    }
+}
+
+function getActions($def)
+{
+    $actions = array();
+    if (true === is_array($def)) {
+        $actions = array_intersect(array('view', 'create', 'edit', 'delete', 'publish'), $def);
+    } elseif ('all' === $def) {
+        $actions = array('view', 'create', 'edit', 'delete', 'publish');
+    }
+
+    return $actions;
+}
+
+function addSiteRights($sitesDef, $aclProvider, $securityIdentity, $site)
+{
+    if (false === array_key_exists('resources', $sitesDef) || false === array_key_exists('actions', $sitesDef)) {
+        return array();
+    }
+
+    $actions = getActions($sitesDef['actions']);
+    if (0 === count($actions)) {
+        return array();
+    }
+
+    $sites = array();
+    if (true === is_array($sitesDef['resources']) && in_array($site->getLabel(), $sitesDef['resources'])) {
+        addObjectAcl($site, $aclProvider, $securityIdentity, $actions);
+    } elseif ('all' === $sitesDef['resources']) {
+        addClassAcl(new \BackBee\Site\Site('*'), $aclProvider, $securityIdentity, $actions);
+    }
+}
+
+function addLayoutRights($layoutDef, $aclProvider, $securityIdentity, $site, $em)
+{
+    if (false === array_key_exists('resources', $layoutDef) || false === array_key_exists('actions', $layoutDef)) {
+        return;
+    }
+
+    $actions = getActions($layoutDef['actions']);
+    if (0 === count($actions)) {
+        return array();
+    }
+
+    if (true === is_array($layoutDef['resources'])) {
+        foreach ($layoutDef['resources'] as $layout_label) {
+            if (null === $layout = $em->getRepository('BackBee\Site\Layout')->findOneBy(array('_site' => $site, '_label' => $layout_label))) {
+                continue;
+            }
+
+            addObjectAcl($layout, $aclProvider, $securityIdentity, $actions);
+        }
+    } elseif ('all' === $layoutDef['resources']) {
+        addClassAcl(new \BackBee\Site\Layout('*'), $aclProvider, $securityIdentity, $actions);
+    }
+}
+
+function addPageRights($pageDef, $aclProvider, $securityIdentity)
+{
+    if (false === array_key_exists('resources', $pageDef) || false === array_key_exists('actions', $pageDef)) {
+        return;
+    }
+
+    $actions = getActions($pageDef['actions']);
+    if (0 === count($actions)) {
+        return array();
+    }
+
+    if (true === is_array($pageDef['resources'])) {
+        foreach ($pageDef['resources'] as $page_url) {
+            $pages = $em->getRepository('BackBee\NestedNode\Page')->findBy(array('_url' => $page_url));
+            foreach ($pages as $page) {
+                addObjectAcl($page, $aclProvider, $securityIdentity, $actions);
+            }
+        }
+    } elseif ('all' === $pageDef['resources']) {
+        addClassAcl(new \BackBee\NestedNode\Page('*'), $aclProvider, $securityIdentity, $actions);
+    }
+}
+
+function addFolderRights($folderDef, $aclProvider, $securityIdentity)
+{
+    if (false === array_key_exists('resources', $folderDef) || false === array_key_exists('actions', $folderDef)) {
+        return;
+    }
+
+    $actions = getActions($folderDef['actions']);
+    if (0 === count($actions)) {
+        return array();
+    }
+
+    if ('all' === $folderDef['resources']) {
+        addClassAcl(new \BackBee\NestedNode\MediaFolder('*'), $aclProvider, $securityIdentity, $actions);
+    }
+}
+
+function addContentRights($contentDef, $aclProvider, $securityIdentity)
+{
+    global $bbapp;
+
+    if (false === array_key_exists('resources', $contentDef) || false === array_key_exists('actions', $contentDef)) {
+        return;
+    }
+
+    if ('all' === $contentDef['resources']) {
+        $actions = getActions($contentDef['actions']);
+        if (0 === count($actions)) {
+            return array();
+        }
+
+        $objectIdentity = new \Symfony\Component\Security\Acl\Domain\ObjectIdentity("class", "BackBee\ClassContent\AClassContent");
+        try {
+            $acl = $aclProvider->findAcl($objectIdentity, array($securityIdentity));
+        } catch (\Exception $e) {
+            $acl = $aclProvider->createAcl($objectIdentity);
+        }
+
+        foreach ($actions as $right) {
+            try {
+                $map = new \BackBee\Security\Acl\Permission\PermissionMap();
+                $acl->isGranted($map->getMasks(strtoupper($right), $object), array($securityIdentity));
+            } catch (\Exception $e) {
+                $builder = new \BackBee\Security\Acl\Permission\MaskBuilder();
+                foreach ($actions as $right) {
+                    $builder->add($right);
+                }
+                $mask = $builder->get();
+
+                $acl->insertClassAce($securityIdentity, $mask);
+                $aclProvider->updateAcl($acl);
+            }
+        }
+    } elseif (true === is_array($contentDef['resources']) && 0 < count($contentDef['resources'])) {
+        if (true === is_array($contentDef['resources'][0])) {
+            $used_classes = array();
+            foreach($contentDef['resources'] as $index => $resources_def) {
+                if (false === isset($contentDef['actions'][$index])) {
+                    continue;
+                }
+
+                $actions = getActions($contentDef['actions'][$index]);
+
+                if ('remains' === $resources_def) {
+                    foreach($all_classes as $content) {
+                        $classname = '\BackBee\ClassContent\\' . $content->name;
+                        if (false === in_array($classname, $used_classes)) {
+                            $used_classes[] = $classname;
+                            if (0 < count($actions)) {
+                                addClassAcl(new $classname('*'), $aclProvider, $securityIdentity, $actions);
+                            }
+                        }
+                    }
+                } elseif (true === is_array($resources_def)) {
+                    foreach ($resources_def as $content) {
+                        $classname = '\BackBee\ClassContent\\' . $content;
+                        if (substr($classname, -1) === '*') {
+                            $classname = substr($classname, 0 - 1);
+                            foreach ($all_classes as $content) {
+                                $fullclass = '\BackBee\ClassContent\\' . $content->name;
+                                if (0 === strpos($fullclass, $classname)) {
+                                    $used_classes[] = $fullclass;
+                                    if (0 < count($actions)) {
+                                        addClassAcl(new $fullclass('*'), $aclProvider, $securityIdentity, $actions);
+                                    }
+                                }
+                            }
+                        } elseif (true === class_exists($classname)) {
+                            $used_classes[] = $classname;
+                            if (0 < count($actions)) {
+                                addClassAcl(new $classname('*'), $aclProvider, $securityIdentity, $actions);
+                            }
+                        } else {
+
+                        }
+                    }
+                }
+            }
+        } else {
+            $actions = getActions($contentDef['actions']);
+            if (0 === count($actions)) {
+                return array();
+            }
+
+            foreach ($contentDef['resources'] as $content) {
+                $classname = '\BackBee\ClassContent\\' . $content;
+                if (substr($classname, -1) === '*') {
+                    $classname = substr($classname, 0 -1);
+                    foreach($all_classes as $content) {
+                        $fullclass = '\BackBee\ClassContent\\' . $content->name;
+                        if (0 === strpos($fullclass, $classname)) {
+                            addClassAcl(new $fullclass('*'), $aclProvider, $securityIdentity, $actions);
+                        }
+                    }
+                } elseif (true === class_exists($classname)) {
+                    addClassAcl(new $classname('*'), $aclProvider, $securityIdentity, $actions);
+                } else {
+
+                }
+            }
+        }
+    }
+}
+
+function addBundleRights($bundleDef, $aclProvider, $securityIdentity, $application)
+{
+
+    if (false === array_key_exists('resources', $bundleDef) || false === array_key_exists('actions', $bundleDef)) {
+        return;
+    }
+
+    $actions = getActions($bundleDef['actions']);
+    if (0 === count($actions)) {
+        return array();
+    }
+
+    if (true === is_array($bundleDef['resources'])) {
+        foreach ($bundleDef['resources'] as $bundle_name) {
+            if (null !== $bundle = $application->getBundle($bundle_name)) {
+                addObjectAcl($bundle, $aclProvider, $securityIdentity, $actions);
+            }
+        }
+    } elseif ('all' === $bundleDef['resources']) {
+        foreach ($application->getBundles() as $bundle) {
+            addObjectAcl($bundle, $aclProvider, $securityIdentity, $actions);
+        }
+    }
+}
+
+function addClassAcl($object, $aclProvider, $securityIdentity, $rights)
+{
+    $objectIdentity = Symfony\Component\Security\Acl\Domain\ObjectIdentity::fromDomainObject($object);
+
+    try {
+        $acl = $aclProvider->findAcl($objectIdentity, array($securityIdentity));
+    } catch (\Exception $e) {
+        $acl = $aclProvider->createAcl($objectIdentity);
+    }
+
+    foreach ($rights as $right) {
+        try {
+            $map = new \BackBee\Security\Acl\Permission\PermissionMap();
+            $acl->isGranted($map->getMasks(strtoupper($right), $object), array($securityIdentity));
+        } catch (\Exception $e) {
+            $builder = new \BackBee\Security\Acl\Permission\MaskBuilder();
+            foreach ($rights as $right) {
+                $builder->add($right);
+            }
+            $mask = $builder->get();
+
+            $acl->insertClassAce($securityIdentity, $mask);
+            $aclProvider->updateAcl($acl);
+        }
+    }
+}
+
+function addObjectAcl($object, $aclProvider, $securityIdentity, $rights)
+{
+    $objectIdentity = Symfony\Component\Security\Acl\Domain\ObjectIdentity::fromDomainObject($object);
+
+    try {
+        $acl = $aclProvider->findAcl($objectIdentity, array($securityIdentity));
+    } catch (\Exception $e) {
+        $acl = $aclProvider->createAcl($objectIdentity);
+    }
+
+    foreach ($rights as $right) {
+        try {
+            $map = new \BackBee\Security\Acl\Permission\PermissionMap();
+            $acl->isGranted($map->getMasks(strtoupper($right), $object), array($securityIdentity));
+        } catch (\Exception $e) {
+            $builder = new \BackBee\Security\Acl\Permission\MaskBuilder();
+            foreach ($rights as $right) {
+                $builder->add($right);
+            }
+            $mask = $builder->get();
+
+            $acl->insertObjectAce($securityIdentity, $mask);
+            $aclProvider->updateAcl($acl);
+        }
+    }
 }
 
 ?>
