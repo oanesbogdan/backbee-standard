@@ -1,0 +1,68 @@
+administrator:
+  sites:
+    resources: all
+    actions: all
+  layouts:
+    resources: all
+    actions: all
+  workflow:
+    resources: all
+    actions: all
+  mediafolders:
+    resources: all
+    actions: all
+  pages:
+    resources: all
+    actions: all
+  contents:
+    resources: all
+    actions: all
+  bundles:
+    resources: all
+    actions: all
+
+contributor:
+  sites:
+   resources: all
+   actions: none
+  layouts:
+    resources: all
+    actions: none
+  workflow:
+    resources: all
+    actions: none
+  mediafolders:
+    resources: all
+    actions: all
+  pages:
+    resources: all
+    actions: [view, create, edit]
+  contents:
+    resources: all
+    actions: all
+  bundles:
+    resources: all
+    actions: all
+
+validator:
+  sites:
+   resources: all
+   actions: none
+  layouts:
+    resources: all
+    actions: none
+  workflow:
+    resources: all
+    actions: none
+  mediafolders:
+    resources: all
+    actions: all
+  pages:
+    resources: all
+    actions: [view, create, edit, publish]
+  contents:
+    resources: all
+    actions: all
+  bundles:
+    resources: all
+    actions: all
