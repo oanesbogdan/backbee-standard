@@ -10,3 +10,4 @@ composer.lock
 doctrine.yml
 services.yml
 sites.yml
+repository/Config/security.yml

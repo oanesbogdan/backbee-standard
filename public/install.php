@@ -84,7 +84,6 @@ switch ($step) {
             && isset($_POST['user_re-password'])
             && ($_POST['user_password'] === $_POST['user_re-password'])
         ) {
-
             $doctrine = [
                 'dbal' => [
                     'driver'    => $_POST['driver'],
@@ -249,10 +248,11 @@ switch ($step) {
                 $entityManager->persist($adminUser);
                 $entityManager->flush($adminUser);
 
-                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml');
+                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml.dist');
                 $security['sudoers'] = [$adminUser->getLogin() => $adminUser->getId()];
                 file_put_contents(dirname(__DIR__) . '/repository/Config/security.yml', $yaml->dump($security));
-
+                chmod(dirname(__DIR__) . '/repository/Config/security.yml', 0755);
+                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml');
             } catch (\Exception $e) {
                 // to be catched by Debug component
             }
