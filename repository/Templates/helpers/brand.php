@@ -1,10 +1,11 @@
 <?php
+
 namespace BackBee\Renderer\Helper;
 
 /**
  * @author e.chau <eric.chau@lp-digital.fr>
  */
-class brand extends AHelper
+class brand extends AbstractHelper
 {
     /**
      * Returns the brand of the current site
