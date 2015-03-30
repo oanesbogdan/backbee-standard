@@ -10,27 +10,12 @@
             "email": "eric.chau@lp-digital.fr"
         }
     ],
-     "repositories": [
-        {
-            "type":"package",
-            "package": {
-                "name": "backbee/client-js",
-                "description": "Javascript client for BackBee CMS",
-                "version": "dev-master",
-                "dist": {
-                    "url": "https://github.com/backbee/BbCoreJs/archive/master.zip",
-                    "type": "zip"
-                }
-            }
-        }
-    ],
     "require": {
         "php": ">=5.4.0",
-        "backbee/backbee": "dev-master",
-        "backbee/client-js": "dev-master",
-        "backbee/script-handler": "dev-master",
-        "backbee/demo-bundle": "dev-master",
-        "backbee/toolbar-bundle": "dev-master"
+        "backbee/backbee": "1.0.*@dev",
+        "backbee/script-handler": "1.0.*@dev",
+        "backbee/demo-bundle": "1.0.*@dev",
+        "backbee/toolbar-bundle": "1.0.*@dev"
     },
     "autoload": {
         "psr-4": {
@@ -67,7 +52,10 @@
             {
                 "file": "repository/Config/parameters.yml"
             }
-        ]
+        ],
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
