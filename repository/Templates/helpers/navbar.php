@@ -2,7 +2,7 @@
 
 namespace BackBee\Renderer\Helper;
 
-class navbar extends AHelper
+class navbar extends AbstractHelper
 {
 
     public function __invoke($mode = null)
