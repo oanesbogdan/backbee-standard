@@ -338,12 +338,12 @@ switch ($step) {
                     $em->flush($page);
 
                     $blockDemo = new \BackBee\ClassContent\BlockDemo();
-                    $blockDemo->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $blockDemo->setState(\BackBee\ClassContent\AbstractClassContent::STATE_NORMAL);
                     $blockDemo->setRevision(1);
                     $homeContainer = new \BackBee\ClassContent\Home\HomeContainer();
-                    $homeContainer->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $homeContainer->setState(\BackBee\ClassContent\AbstractClassContent::STATE_NORMAL);
                     $homeContainer->setRevision(1);
-                    $homeContainer->container->setState(\BackBee\ClassContent\AClassContent::STATE_NORMAL);
+                    $homeContainer->container->setState(\BackBee\ClassContent\AbstractClassContent::STATE_NORMAL);
                     $homeContainer->container->setRevision(1);
                     $homeContainer->container->push($blockDemo);
                     $page->getContentSet()->first()->push($homeContainer);
@@ -529,7 +529,7 @@ function addContentRights($contentDef, $aclProvider, $securityIdentity)
             return array();
         }
 
-        $objectIdentity = new \Symfony\Component\Security\Acl\Domain\ObjectIdentity("class", "BackBee\ClassContent\AClassContent");
+        $objectIdentity = new \Symfony\Component\Security\Acl\Domain\ObjectIdentity("class", "BackBee\ClassContent\AbstractClassContent");
         try {
             $acl = $aclProvider->findAcl($objectIdentity, array($securityIdentity));
         } catch (\Exception $e) {
