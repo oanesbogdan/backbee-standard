@@ -29,14 +29,16 @@ require $autoloadFile;
 $context = null;
 $environment = null;
 
-$application = new \BackBee\Standard\Application($context, $environment);
+
 
 /**
  * After installation you can delete this check
  * and only keep $application->start();
  */
-if ($application->isIntalled()) {
+if (BackBee\Standard\Application::isInstalled()) {
+    $application = new \BackBee\Standard\Application($context, $environment);
     $application->start();
 }else {
     header('Location: install.php');
 }
+

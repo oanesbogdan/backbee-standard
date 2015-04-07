@@ -40,11 +40,13 @@ class Application extends BBApplication
     /**
      * Check if the CMS is installed
      */
-    public function isIntalled()
+    public static function isInstalled()
     {
-        return is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'sites.yml')
-            && is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'doctrine.yml')
-            && is_file($this->getBBConfigDir().DIRECTORY_SEPARATOR.'bootstrap.yml')
+        $configDirectory = __DIR__.DIRECTORY_SEPARATOR.'repository'.DIRECTORY_SEPARATOR.'Config';
+        return is_file($configDirectory.DIRECTORY_SEPARATOR.'sites.yml')
+            && is_file($configDirectory.DIRECTORY_SEPARATOR.'doctrine.yml')
+            && is_file($configDirectory.DIRECTORY_SEPARATOR.'bootstrap.yml')
         ;
     }
 }
+
