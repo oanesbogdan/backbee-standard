@@ -24,13 +24,13 @@ administrator:
 contributor:
   sites:
    resources: all
-   actions: none
+   actions: [view]
   layouts:
     resources: all
-    actions: none
+    actions: [view]
   workflow:
     resources: all
-    actions: none
+    actions: all
   mediafolders:
     resources: all
     actions: all
@@ -47,13 +47,13 @@ contributor:
 validator:
   sites:
    resources: all
-   actions: none
+   actions: [view]
   layouts:
     resources: all
-    actions: none
+    actions: [view]
   workflow:
     resources: all
-    actions: none
+    actions: all
   mediafolders:
     resources: all
     actions: all
