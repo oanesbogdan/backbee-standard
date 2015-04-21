@@ -798,7 +798,7 @@ function addObjectAcl($object, $aclProvider, $securityIdentity, $rights)
                             <?php else: ?>
                                 <form action="" method="POST" role="form" class="form-inline">
                                     <div class="form-group">
-                                        <label for="debug" >Developper mode ?</label>
+                                        <label for="debug" >Developer mode ?</label>
                                         <select name="debug" id="debug" class="form-control">
                                             <option value="0" selected>false</option>
                                             <option value="1">true</option>
