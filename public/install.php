@@ -76,14 +76,14 @@ switch ($step) {
             && isset($_POST['dbname'])
             && isset($_POST['user'])
             && array_key_exists('password', $_POST)
-            && isset($_POST['charset'])
-            && isset($_POST['collation'])
             && isset($_POST['username'])
             && isset($_POST['user_email'])
             && isset($_POST['user_password'])
             && isset($_POST['user_re-password'])
             && ($_POST['user_password'] === $_POST['user_re-password'])
         ) {
+            $charset = 'utf8';
+            $collation = 'utf8_general_ci';
             $doctrine = [
                 'dbal' => [
                     'driver'    => $_POST['driver'],
@@ -92,12 +92,12 @@ switch ($step) {
                     'dbname'    => $_POST['dbname'],
                     'user'      => $_POST['user'],
                     'password'  => $_POST['password'],
-                    'charset'   => $_POST['charset'],
-                    'collation' => $_POST['collation'],
+                    'charset'   => $charset,
+                    'collation' => $collation,
                     'defaultTableOptions' => [
-                        'collate' => $_POST['collation'],
+                        'collate' => $collation,
                         'engine'  => $_POST['engine'],
-                        'charset' => $_POST['charset']
+                        'charset' => $charset
                     ]
                 ]
             ];
@@ -109,8 +109,7 @@ switch ($step) {
             $dbname = $_POST['dbname'];
             $host = $_POST['host'];
             $port = $_POST['port'];
-            $charset = $_POST['charset'];
-            $collation = $_POST['collation'];
+
             try {
                 $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $username, $password);
             } catch (PDOException $ex) {
@@ -820,48 +819,45 @@ function addObjectAcl($object, $aclProvider, $securityIdentity, $rights)
                                 <input type="hidden" name="step" value="3" />
 
                                 <div class="form-group">
-                                    <label for="driver">driver</label>
-                                    <input type="text" class="form-control" name="driver" placeholder="pdo_mysql" required="required" />
+                                    <label for="driver">Database</label>
+                                    <select class="form-control" name="driver" id="driver">
+                                        <option value="pdo_mysql" selected>MySQL</option>
+                                        <option value="pdo_pgsql">PostgreSQL</option>
+                                        <option value="pdo_sqlite">SQLite</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="engine">engine</label>
-                                    <input type="text" class="form-control" name="engine" placeholder="InnoDB" required="required" />
+                                    <label for="engine">DataBase storage engine</label>
+                                    <select class="form-control" name="engine" id="engine">
+                                        <option value="InnoDB" selected>InnoDB</option>
+                                        <option value="MyISAM">MyISAM</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="host">host</label>
+                                    <label for="host">Database host</label>
                                     <input type="text" class="form-control" name="host" placeholder="localhost" required="required" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="port">port</label>
-                                    <input type="text" class="form-control" name="port" placeholder="3306" required="required" />
+                                    <label for="port">Database port</label>
+                                    <input type="text" class="form-control" name="port" value="3306" required="required" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="dbname">database name</label>
+                                    <label for="dbname">Database name</label>
                                     <input type="text" class="form-control" name="dbname" required="required" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="user">username</label>
+                                    <label for="user">Database user username</label>
                                     <input type="text" class="form-control" name="user" placeholder="root" required="required" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">password</label>
+                                    <label for="password">Database user password</label>
                                     <input type="password" class="form-control" name="password" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="charset">charset</label>
-                                    <input type="text" class="form-control" name="charset" placeholder="utf8" required="required" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="collation">collation</label>
-                                    <input type="text" class="form-control" name="collation" placeholder="utf8_general_ci" required="required" />
                                 </div>
 
                                 <h2>Admin user configuration</h2>
@@ -901,12 +897,12 @@ function addObjectAcl($object, $aclProvider, $securityIdentity, $rights)
                                 <input type="hidden" name="step" value="4" />
 
                                 <div class="form-group">
-                                    <label for="site_name">site name</label>
+                                    <label for="site_name">Site name</label>
                                     <input type="text" class="form-control" name="site_name" placeholder="My wonderful website" required="required" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="domain">domain</label>
+                                    <label for="domain">Site domain</label>
                                     <input type="text" class="form-control" name="domain" placeholder="my-wonderful-website.com" required="required" />
                                 </div>
 
