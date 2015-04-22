@@ -4,6 +4,7 @@ Image:
         description: A media image
         labelized-by: title->value
         category: [Media]
+    traits: [BackBee\Traits\MediaImageNameTrait]
     elements:
         title:
             type: BackBee\ClassContent\Element\Text
