@@ -6,19 +6,18 @@ BackBee CMS Standard Edition
 
 BackBee is an open-source content management system. Because it incorporates HTML5 programming to an unprecedented extent, its usability and design flexibility surpasses all other content management systems that we know of.
 
-All changes in content – adding, deleting or changing text, images or new page elements – can be made directly on the page. Just click and type, or drag and drop. No back office. No shuttling back and forth between the back end and a page “preview” that often does not exactly match the final page display.
-cubes what is backbee
+All changes in content – adding, deleting or changing text, images or new page elements – can be made directly on the page. Just click and type, or drag and drop. No back office. No shuttling back and forth between the back end and a “preview” page that often fails to match the final page display.
 
 BackBee offers what we like to call WYSIWYRG, What You See Is What You Really Get. And because it automatically saves different page versions, there’s no fear of losing changes along the way. If only everything in life could be this easy and secure.
 
 
-:speech_balloon: If you want to have some informations about the projet progression you can take a look to the actual [Roadmap](https://waffle.io/backbee/backbee-standard).
+:speech_balloon: If you want to have more information about the project progression you can take a look at the actual [Roadmap](https://waffle.io/backbee/backbee-standard).
 
 ## Features: ##
 
 * Powerful and easy to use content system
 * Multiple websites
-* Custom theming
+* Custom themes
 * Custom pages
 * Advanced block system
 * Users/Groups management
@@ -60,22 +59,22 @@ Also, while creating your Pull Request on GitHub, you MUST write a description w
 ### Workflow
 
 When you create a Pull Request ("PR"), if it's component related you can prefix it by the component name.
-You can also use plus or minus to describe if you globaly add or remove something, and references it to an issue.
+You can also use plus or minus to describe if you globally add or remove something, and reference it to an issue.
 
 For instance, this is a PR valid label: ``[Rest] #42 + Updated & completed PageController tests``.
 
 When you want to take an issue, create your PR prefixed by a [WIP]("Work in progress") and add a "in progress" label.
-This way, we know you are working on and we can give you some advices if needed.
+This way, we know you are working on it and we can give you some advices if needed.
 
 When you have finished your PR, you can update the PR label to replace [WIP] by [RFR]("Ready for review") prefix.
 
 Consider your PR finished if:
 
-* You have write a test with a new feature;
+* You have written a test with a new feature;
 * All tests pass;
 * The build is all green;
 * You (may) have introduced a little documentation;
-* Your PR respect project formatting rules (see above);
+* Your PR respects project formatting rules (see above);
 
 ### Sync a fork
 
@@ -89,7 +88,7 @@ $ git merge upstream/master
 
 ### Formatting
 
-We use [php-formatter](https://github.com/mmoreram/php-formatter) to manage your file headers and the way the use statments should be added to the classes.
+We use [php-formatter](https://github.com/mmoreram/php-formatter) to manage your file headers and the way the use statements should be added to the classes.
 
 Before submit your Pull Request, don't forget to apply this commands:
 
@@ -103,7 +102,7 @@ You need to install php-formatter before.
 
 BackBee have a core team who have rights on repositories.
 * Only mergers can merge your work on master branch;
-* If one of deciders give a ``:-1:`` on your suggest, the pull request won't be merged until he changes his mind;
+* If one of the deciders gives a ``:-1:`` on your suggestion, the pull request won't be merged until he changes his mind;
 
 Actual mergers are @eric-chau and @crouillon, actual deciders are @pasinter, @ndufreche and @fkroockmann.
 
@@ -112,7 +111,7 @@ All the core team is here to help you if you want to improve BackBee, we love co
 
 Thank you!
 
-note: this ``CONTRIBUTING`` file is proudly inspired form [Hateoas' one](https://github.com/willdurand/Hateoas/blob/master/CONTRIBUTING.md)
+note: this ``CONTRIBUTING`` file is proudly inspired from [Hateoas' one](https://github.com/willdurand/Hateoas/blob/master/CONTRIBUTING.md)
 
 
 Thanks to [everyone who has contributed](https://github.com/backbee/backbee-standard/graphs/contributors) already.
