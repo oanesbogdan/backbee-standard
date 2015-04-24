@@ -1,0 +1,14 @@
+keywords:
+  name: 'keywords'
+  content:
+    default: 'cms, content manager'
+description:
+  name: 'description'
+  content:
+    default: "backbee demo website"
+  lang: 'en'
+robots:
+  name: 'robots'
+  content:
+    default: ''
+    select: ['', 'noindex', 'nofollow', 'noindex, nofollow']
