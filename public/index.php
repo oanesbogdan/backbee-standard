@@ -20,8 +20,8 @@
  */
 
 if (!is_file($autoloadFile = __DIR__.'/../vendor/autoload.php')) {
-    echo('<p>BackBee could not find composer autoloader. Did you install and run "composer install --dev" command?</p>');
-    throw new \LogicException('Could not find autoload.php in vendor/. Did you run "composer install --dev"?');
+    echo('<p>BackBee could not find composer autoloader. Did you install and run "composer install --no-dev" command?</p>');
+    throw new \LogicException('Could not find autoload.php in vendor/. Did you run "composer install --no-dev"?');
 }
 
 require $autoloadFile;
