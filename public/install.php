@@ -1,6 +1,5 @@
 <?php
 
-
 if (!isset($_SERVER['HTTP_HOST'])) {
     exit('This script cannot be run from the CLI. Run it from a browser.');
 }
@@ -115,14 +114,24 @@ switch ($step) {
             } catch (PDOException $ex) {
                 try {
                     $conn = mysqli_connect($host, $username, $password, null, $port);
-                    mysqli_query($conn, "create database IF NOT EXISTS `" . addslashes($dbname) . "` character set $charset collate $collation;");
+                    mysqli_query(
+                        $conn,
+                        sprintf(
+                            'create database IF NOT EXISTS `%s` character set %s collate %s;',
+                            addslashes($dbname),
+                            $charset,
+                            $collation
+
+                        )
+                    );
                 } catch (\Exception $e) {
-                    echo("Failed to connect to database with the current exceptionmessage : ". $ex->getMessage());
+                    echo('Failed to connect to database with the current exception message : ' . $e->getMessage());
                     // to be catched by Debug component
                 }
             }
 
             $application = new \BackBee\Standard\Application();
+
             /**
              * Creation of website skeleton
              * -> Website
@@ -130,9 +139,8 @@ switch ($step) {
              * -> Pages
              * -> Admin user
              */
-
             try {
-                $database = new BackBee\Installer\Database($application);
+                $database = new \BackBee\Installer\Database($application);
                 $database->updateBackBeeSchema();
                 $database->updateBundlesSchema();
             } catch (\Exception $e) {
@@ -279,7 +287,7 @@ switch ($step) {
                 \BackBee\Utils\String::urlize($_POST['site_name']) => [
                     'label'  => $_POST['site_name'],
                     'domain' => $_POST['domain'],
-                ]
+                ],
             ];
 
             file_put_contents(dirname(__DIR__) . '/repository/Config/sites.yml', $yaml->dump($sites));
@@ -379,6 +387,13 @@ switch ($step) {
                 setSiteGroupRights($site, $group, $rights);
             }
         }
+
+        $containerDumpDir = $application->getContainer()->getParameter('container.dump_directory');
+        foreach (glob($containerDumpDir.DIRECTORY_SEPARATOR.'*') as $file) {
+             if (is_file($file)) {
+                unlink($file);
+             }
+         }
 
         break;
 
