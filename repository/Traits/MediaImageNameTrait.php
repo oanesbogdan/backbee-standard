@@ -34,7 +34,7 @@ trait MediaImageNameTrait
     public function getImageName()
     {
         $imageName =  $this->getDefaultImageName();
-        if (null !== $this->image) {
+        if (null !== $this->image && !empty($this->image->path)) {
             $imageName = '/'.$this->image->path;
         }
 
