@@ -945,24 +945,23 @@ server {
 
     location ~ /resources/(.*) {
         alias <?php echo dirname(__DIR__) . '/'; ?>;
-        try_files /repository/Resources/$1 /vendor/backbee/backbee/Resources/$1 break;
+        try_files /repository/Resources/$1 /vendor/backbee/backbee/Resources/$1 @rewriteapp;
     }
 
-    location ~ /(css|fonts|img)/(.*) {
-        try_files $uri @rewriteapp;
-    }
+    location @emptygif404 { empty_gif; }
 
     location / {
         try_files $uri @rewriteapp;
     }
 
     location @rewriteapp {
-        rewrite ^(.*)$ /index.php last;
+        rewrite ^(.*)$ /index.php?$query_string last;
     }
 
-    location ~ ^/(config|index)\.php(/|$) {
+    location ~ ^/(install|index)\.php(/|$) {
         fastcgi_pass unix:/var/run/php5-fpm.sock;
         include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }</pre>
                     <p>Example of apache2 virtual host:</p>
