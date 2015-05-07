@@ -275,18 +275,19 @@ switch ($step) {
          * my-wonderful-website:
          *   label: 'My wonderful website'
          *   domain: my.wonderful-website.com
-        *
+         *
          */
-        if (isset($_POST['site_name']) && isset($_POST['domain'])) {
+        $application = new \BackBee\Standard\Application();
 
-            $application = new \BackBee\Standard\Application();
+        if (isset($_POST['site_name']) && isset($_POST['domain']) && (filter_var($_POST['domain'], FILTER_VALIDATE_URL) !== false)) {
+
             $em = $application->getEntityManager();
             $pagebuilder = $application->getContainer()->get('pagebuilder');
-
+            $domain = parse_url($_POST['domain'],PHP_URL_HOST);
             $sites = [
                 \BackBee\Utils\String::urlize($_POST['site_name']) => [
                     'label'  => $_POST['site_name'],
-                    'domain' => $_POST['domain'],
+                    'domain' => $domain,
                 ],
             ];
 
@@ -918,7 +919,7 @@ function addObjectAcl($object, $aclProvider, $securityIdentity, $rights)
 
                                 <div class="form-group">
                                     <label for="domain">Site domain</label>
-                                    <input type="text" class="form-control" name="domain" placeholder="my-wonderful-website.com" required="required" />
+                                    <input type="url" class="form-control" name="domain" placeholder="my-wonderful-website.com" required="required" />
                                 </div>
 
                                 <div class="text-right">
