@@ -27,8 +27,8 @@ class navbar extends AbstractHelper
                     ];
 
                     $articles[$page->getUid()] = $application->getEntityManager()
-                        ->getRepository('BackBee\ClassContent\AClassContent')
-                        ->getSelection($selector, false, true, 0, 3, true, false, ['BackBee\ClassContent\article'])
+                        ->getRepository('BackBee\ClassContent\AbstractClassContent')
+                        ->getSelection($selector, false, true, 0, 3, true, false, ['BackBee\ClassContent\Article'])
                     ;
                 }
             }
