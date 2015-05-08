@@ -46,40 +46,6 @@
 
     {{ this.render(body)|raw }}
 
-    <!-- article-author -->
-    <div class="row article-footer links-color" id="article-author">
-        <div class="col-md-6">
-            <div class="article-author-id" itemprop="author">
-                <figure class="figure block-left">
-                    <img src="{{ this.getUri('ressources/img/media-avatar-01.png') }}" alt="Lorem ipsum" itemprop="image">
-                </figure>
-
-                <!-- -->
-                <div class="float-reflow">
-                    <p><a href="#" rel="author" itemprop="">{{ signature }}</a> <i itemprop="jobTitle">News reporter</i></p>
-                    <meta itemprop="interactionCount" content="UserTweets:1203">
-                    <meta itemprop="interactionCount" content="UserComments:78">
-                    <p>Follow him on&nbsp;:</p>
-                    <ul class="list-inline">
-                        <li><a href="#" class="btn btn-default btn-sm" title="Go to his Google+" target="_blank" rel="author me"><i class="fa fa-google-plus"></i><i class="sr-only">{{ signature }} on Google+</i></a></li>
-                        <li><a href="#" class="btn btn-default btn-sm" title="Go to his Twitter" target="_blank" rel="me"><i class="fa fa-twitter"></i><i class="sr-only">{{ signature }} on Twitter</i></a></li>
-                        <li><a href="#" class="btn btn-default btn-sm" title="Go to his LinkedIn" target="_blank" rel="me"><i class="fa fa-linkedin"></i><i class="sr-only">{{ signature }} on LinkedIn</i></a></li>
-                        <li><a href="#" class="btn btn-default btn-sm" title="Send an email" target="_blank" rel="me"><i class="fa fa-envelope-o"></i><i class="sr-only">Send an email to {{ signature }}</i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="article-author-production">
-                <p><i>Last article</i></p>
-                <p><a href="#" itemprop="url"><i class="fa fa-angle-right"></i>&nbsp;Some random article title here...</a></p>
-                <p>Rated&nbsp;: 90/100 (35 votes)</p>
-            </div>
-        </div>
-
-    </div>
-
     <section class="bloc">
         {{ this.render(related)|raw }}
     </section>
