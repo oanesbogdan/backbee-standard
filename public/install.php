@@ -283,7 +283,11 @@ switch ($step) {
 
             $em = $application->getEntityManager();
             $pagebuilder = $application->getContainer()->get('pagebuilder');
-            $domain = parse_url($_POST['domain'],PHP_URL_HOST);
+            $host = parse_url($_POST['domain'],PHP_URL_HOST);
+            $port = parse_url($_POST['domain'], PHP_URL_PORT);
+
+            $domain = $host.(empty($port) ? '' : ':'.$port);
+
             $sites = [
                 \BackBee\Utils\String::urlize($_POST['site_name']) => [
                     'label'  => $_POST['site_name'],
