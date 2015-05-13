@@ -38,6 +38,14 @@ class Application extends BBApplication
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getConfigurationDir()
+    {
+        return __DIR__ . DIRECTORY_SEPARATOR . 'repository' . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR;
+    }
+
+    /**
      * Check if the CMS is installed
      */
     public static function isInstalled()
