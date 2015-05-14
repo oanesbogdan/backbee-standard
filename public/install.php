@@ -246,7 +246,8 @@ switch ($step) {
                 $encoderFactory = $application->getContainer()->get('security.context')->getEncoderFactory();
 
                 $adminUser = new \BackBee\Security\User($_POST['username'], $_POST['user_password'], 'admin', 'admin');
-                $adminUser->setActivated(true);
+                $adminUser->setApiKeyEnabled(true)
+                          ->setActivated(true);
                 $encoder = $encoderFactory->getEncoder($adminUser);
                 $adminUser->setPassword($encoder->encodePassword($_POST['user_password'], ''))
                     ->setEmail($_POST['user_email'])
