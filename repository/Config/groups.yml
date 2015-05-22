@@ -20,27 +20,10 @@ administrator:
   bundles:
     resources: all
     actions: all
-
-contributor:
-  sites:
-   resources: all
-   actions: [view]
-  layouts:
-    resources: all
-    actions: [view]
-  workflow:
+  users:
     resources: all
     actions: all
-  mediafolders:
-    resources: all
-    actions: all
-  pages:
-    resources: all
-    actions: [view, create, edit]
-  contents:
-    resources: all
-    actions: all
-  bundles:
+  groups:
     resources: all
     actions: all
 
@@ -66,3 +49,38 @@ validator:
   bundles:
     resources: all
     actions: all
+  users:
+    resources: all
+    actions: [view]
+  groups:
+    resources: all
+    actions: [view]
+
+contributor:
+  sites:
+   resources: all
+   actions: [view]
+  layouts:
+    resources: all
+    actions: [view]
+  workflow:
+    resources: all
+    actions: all
+  mediafolders:
+    resources: all
+    actions: all
+  pages:
+    resources: all
+    actions: [view, create, edit]
+  contents:
+    resources: all
+    actions: all
+  bundles:
+    resources: all
+    actions: all
+  users:
+    resources: all
+    actions: [view]
+  groups:
+    resources: all
+    actions: [view]
