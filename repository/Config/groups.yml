@@ -1,4 +1,5 @@
 administrator:
+  description: "Rights on all the website and features."
   sites:
     resources: all
     actions: all
@@ -28,6 +29,7 @@ administrator:
     actions: all
 
 validator:
+  description: "Rights on creation, edition and publication of pages. Can only view the rest of the website."
   sites:
    resources: all
    actions: [view]
@@ -57,6 +59,7 @@ validator:
     actions: [view]
 
 contributor:
+  description: "Rights on creation, edition of pages. Can only view the rest of the website."
   sites:
    resources: all
    actions: [view]
