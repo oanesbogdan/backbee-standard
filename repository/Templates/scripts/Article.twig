@@ -2,11 +2,6 @@
 <article {{ this.bbcontent(null, {'class': 'article art-spacing'})|raw }} itemprop="mainContentOfPage" itemtype="http://schema.org/Article" itemscope="">
 
     <header class="header">
-        <p class="metadata-wrapper">
-            {% for keyword in this.getKeywordObjects(keywords) %}
-                <a href="#" class="btn btn-default btn-sm cap" role="button">{{ keyword.getKeyWord() }}</a>
-            {% endfor %}
-        </p>
 
         <h1 itemprop="headline" class="title-article" {{ this.bbcontent(title)|raw }}>
             {{ title.value|raw }}

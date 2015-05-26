@@ -1,4 +1,4 @@
-{% if this.isBBUser() == true %}
+{% if bb.token != null %}
 	<div {{ this.bbcontent()|raw }}>
 		{{ this.render(body)|raw }}
 	</div>
