@@ -388,6 +388,10 @@ switch ($step) {
             foreach ($groups as $groupName => $rights) {
                 $group = new \BackBee\Security\Group();
                 $group->setName($groupName);
+                if (array_key_exists('description', $rights)) {
+                    $group->setDescription($rights['description']);
+                    unset($rights['description']);
+                }
                 $group->setSite($site);
                 $em->persist($group);
                 $em->flush($group);
@@ -442,7 +446,6 @@ function setSiteGroupRights($site, $group, $rights)
 
     if (true === array_key_exists('sites', $rights)) {
         $sites = addSiteRights($rights['sites'], $aclProvider, $securityIdentity, $site);
-
         if (true === array_key_exists('layouts', $rights)) {
             addLayoutRights($rights['layouts'], $aclProvider, $securityIdentity, $site, $em);
         }
@@ -516,7 +519,6 @@ function addUserRights($userDef, $aclProvider, $securityIdentity)
     if (0 === count($actions)) {
         return array();
     }
-
     if (true === is_array($userDef['resources'])) {
         foreach ($userDef['resources'] as $user_id) {
             $user = $em->getRepository('BackBee\Security\User')->findBy(array('_id' => $user_id));
@@ -524,7 +526,7 @@ function addUserRights($userDef, $aclProvider, $securityIdentity)
             addObjectAcl($user, $aclProvider, $securityIdentity, $actions);
         }
     } elseif ('all' === $userDef['resources']) {
-        addClassAcl(new \BackBee\Security\User('*'), $aclProvider, $securityIdentity, $actions);
+        addClassAcl('BackBee\\Security\\User', $aclProvider, $securityIdentity, $actions);
     }
 }
 
@@ -546,7 +548,7 @@ function addGroupRights($groupDef, $aclProvider, $securityIdentity)
             addObjectAcl($group, $aclProvider, $securityIdentity, $actions);
         }
     } elseif ('all' === $groupDef['resources']) {
-        addClassAcl(new \BackBee\Security\Group('*'), $aclProvider, $securityIdentity, $actions);
+        addClassAcl('BackBee\\Security\\Group', $aclProvider, $securityIdentity, $actions);
     }
 }
 
