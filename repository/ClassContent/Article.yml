@@ -1,7 +1,7 @@
 Article:
     properties:
         name: Article
-        description: "An article contains title, author, abstract, main image and a body"
+        description: "An article contains a title, an author, an abstract, a primary image and a body"
         category: [Article]
         indexation: [[permid], [title->value]]
         labelized-by: title->value
