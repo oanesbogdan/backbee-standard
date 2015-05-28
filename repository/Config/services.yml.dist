@@ -1,0 +1,7 @@
+
+services:
+    # see repository/Config.doctrine.yml.dist
+    # add this service to enable Doctrine's class metadata cache
+    doctrine.metadata.cache.driver:
+        class: Doctrine\Common\Cache\FilesystemCache
+        arguments: [%bbapp.cache.dir%/metadata]

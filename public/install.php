@@ -13,11 +13,11 @@ if (!in_array(@$_SERVER['REMOTE_ADDR'], [
     exit('This script is only accessible from localhost.');
 }
 
-require_once __DIR__ . '/BackBeeRequirements.php';
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once __DIR__.'/BackBeeRequirements.php';
+require_once dirname(__DIR__).'/vendor/autoload.php';
 \Symfony\Component\Debug\Debug::enable();
 
-$step = true === isset($_POST['step']) ? intval($_POST['step']) : 1;
+$step = isset($_POST['step']) ? intval($_POST['step']) : 1;
 
 $yaml = new \Symfony\Component\Yaml\Yaml();
 
@@ -35,7 +35,7 @@ switch ($step) {
             break;
         } else {
 
-            $containerDirectory = realpath(__DIR__ . '/..') . '/cache/container';
+            $containerDirectory = realpath(__DIR__.'/..').'/cache/container';
             if (!is_dir($containerDirectory)) {
                 mkdir($containerDirectory, 755);
             }
@@ -48,7 +48,7 @@ switch ($step) {
                 ]
             ];
 
-            file_put_contents(dirname(__DIR__) . '/repository/Config/bootstrap.yml', $yaml->dump($bootstrap));
+            file_put_contents(dirname(__DIR__).'/repository/Config/bootstrap.yml', $yaml->dump($bootstrap));
 
             $step = 3;
         }
@@ -101,7 +101,7 @@ switch ($step) {
                 ]
             ];
 
-            file_put_contents(dirname(__DIR__) . '/repository/Config/doctrine.yml', $yaml->dump($doctrine));
+            file_put_contents(dirname(__DIR__).'/repository/Config/doctrine.yml', $yaml->dump($doctrine));
 
             $username = $_POST['user'];
             $password = $_POST['password'];
@@ -152,93 +152,27 @@ switch ($step) {
             $connection = $entityManager->getConnection();
 
             try {
-                $response = $connection
-                   ->exec("REPLACE INTO `layout` (`uid`, `site_uid`, `label`, `path`, `data`, `created`, `modified`, `picpath`) VALUES ('0760d5a8249eb0d406a2dfc2c6f8c2c4', NULL, 'Model : 1/3 2/3', 'template4.phtml', 0x7B2274656D706C6174654C61796F757473223A5B7B227469746C65223A227A6F6E655F313333323934343035343632325F33222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343035343632315F32222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A342C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22222C226F6D656761436C617373223A22222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D2C7B227469746C65223A227A6F6E655F313333323934343035343632325F35222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343035343632325F34222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A382C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22222C226F6D656761436C617373223A22222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D5D2C226772696453697A65223A22227D, '2012-03-28 14:18:22', '2012-03-28 14:18:22', 'img/layouts/0760d5a8249eb0d406a2dfc2c6f8c2c4.png');
-                    REPLACE INTO `layout` (`uid`, `site_uid`, `label`, `path`, `data`, `created`, `modified`, `picpath`) VALUES ('5b1d38daf71f08551b711c2a173417a5', NULL, 'Model : 2 block horizontal', 'template5.phtml', 0x7B2274656D706C6174654C61796F757473223A5B7B227469746C65223A227A6F6E655F313333323934343332323839325F37222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343332323839325F36222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A31322C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22222C226F6D656761436C617373223A22222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D2C7B227469746C65223A227A6F6E655F313333323934343332323839335F39222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343332323839335F38222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22234C61796F75745F5F313333323934343332323839325F36222C22726573697A61626C65223A66616C73652C227573654772696453697A65223A747275652C226772696453697A65223A31322C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22616C706861222C226F6D656761436C617373223A226F6D656761222C2274797065436C617373223A22684368696C64222C22636C6561724166746572223A312C22686569676874223A3430302C22685369626C696E67223A224C61796F75745F5F313333323934343332323839335F3130222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D2C7B227469746C65223A227A6F6E655F313333323934343332323839335F3132222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343332323839335F3131222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22234C61796F75745F5F313333323934343332323839325F36222C22726573697A61626C65223A66616C73652C227573654772696453697A65223A747275652C226772696453697A65223A32342C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22616C706861222C226F6D656761436C617373223A226F6D656761222C2274797065436C617373223A22684368696C64222C22636C6561724166746572223A312C22686569676874223A3430302C22685369626C696E67223A224C61796F75745F5F313333323934343332323839335F38222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D5D2C226772696453697A65223A22227D, '2012-03-28 14:19:45', '2012-03-28 14:19:45', 'img/layouts/5b1d38daf71f08551b711c2a173417a5.png');
-                    REPLACE INTO `layout` (`uid`, `site_uid`, `label`, `path`, `data`, `created`, `modified`, `picpath`) VALUES ('5e7fc7300ab7fc4b2fc2a9ad6997166f', NULL, 'Default template', 'template1.phtml', 0x7B2274656D706C6174654C61796F757473223A5B7B227469746C65223A22726F6F74222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A22726F6F744C61796F7574222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A31322C226772696453746570223A3130302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77222C226C61796F75744D616E61676572223A5B5D7D5D7D, '2012-04-25 16:17:10', '2012-04-25 16:17:10', 'img/layouts/5e7fc7300ab7fc4b2fc2a9ad6997166f.png');
-                    REPLACE INTO `layout` (`uid`, `site_uid`, `label`, `path`, `data`, `created`, `modified`, `picpath`) VALUES ('7e7d57b47beb1f326a72726dca6df9dd', NULL, 'Model : 2/3 1/3', 'template3.phtml', 0x7B2274656D706C6174654C61796F757473223A5B7B227469746C65223A227A6F6E655F313333323934343035343632325F33222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343035343632315F32222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A382C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22222C226F6D656761436C617373223A22222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D2C7B227469746C65223A227A6F6E655F313333323934343035343632325F35222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934343035343632325F34222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A342C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22616C706861436C617373223A22222C226F6D656761436C617373223A22222C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D5D2C226772696453697A65223A22227D, '2012-03-28 14:17:12', '2012-03-28 14:17:12', 'img/layouts/7e7d57b47beb1f326a72726dca6df9dd.png');
-                    REPLACE INTO `layout` (`uid`, `site_uid`, `label`, `path`, `data`, `created`, `modified`, `picpath`) VALUES ('b3fe3d6c00a143879965abfde008538f', NULL, 'Model : Two columns', 'template2.phtml', 0x7B2274656D706C6174654C61796F757473223A5B7B227469746C65223A224C61796F7574203A20313220636F6C287329222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934333633383133395F31222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A362C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22686569676874223A3830302C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D2C7B227469746C65223A224C61796F7574203A20313220636F6C287329222C226C61796F757453697A65223A7B22686569676874223A3330302C227769647468223A66616C73657D2C226772696453697A65496E666F73223A7B22636F6C5769647468223A36302C226775747465725769647468223A32307D2C226964223A224C61796F75745F5F313333323934333633383133375F30222C226C61796F7574436C617373223A22626234526573697A61626C654C61796F7574222C22616E696D617465526573697A65223A66616C73652C2273686F775469746C65223A66616C73652C22746172676574223A22236262352D6D61696E4C61796F7574526F77222C22726573697A61626C65223A747275652C227573654772696453697A65223A747275652C226772696453697A65223A362C226772696453746570223A38302C2267726964436C617373507265666978223A227370616E222C2273656C6563746564436C617373223A2273656C65637465644C61796F7574222C22706F736974696F6E223A226E6F6E65222C22686569676874223A3830302C2264656661756C74436F6E7461696E6572223A22236262352D6D61696E4C61796F7574526F77227D5D2C226772696453697A65223A22227D, '2012-03-28 14:08:37', '2012-03-28 14:08:37', 'img/layouts/b3fe3d6c00a143879965abfde008538f.png');"
-                );
 
-                $connection->exec("CREATE TABLE IF NOT EXISTS `acl_classes` (
-                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                    `class_type` VARCHAR(200) NOT NULL,
-                    PRIMARY KEY (`id`),
-                    UNIQUE INDEX `UNIQ_69DD750638A36066` (`class_type`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
+                // Create security Acl tables
+                $tablesMapping = [
+                    'class_table_name'         => 'acl_classes',
+                    'entry_table_name'         => 'acl_entries',
+                    'oid_table_name'           => 'acl_object_identities',
+                    'oid_ancestors_table_name' => 'acl_object_identity_ancestors',
+                    'sid_table_name'           => 'acl_security_identities',
+                ];
 
-                $connection->exec("CREATE TABLE IF NOT EXISTS `acl_entries` (
-                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                    `class_id` INT(10) UNSIGNED NOT NULL,
-                    `object_identity_id` INT(10) UNSIGNED NULL DEFAULT NULL,
-                    `security_identity_id` INT(10) UNSIGNED NOT NULL,
-                    `field_name` VARCHAR(50) NULL DEFAULT NULL,
-                    `ace_order` SMALLINT(5) UNSIGNED NOT NULL,
-                    `mask` INT(11) NOT NULL,
-                    `granting` TINYINT(1) NOT NULL,
-                    `granting_strategy` VARCHAR(30) NOT NULL,
-                    `audit_success` TINYINT(1) NOT NULL,
-                    `audit_failure` TINYINT(1) NOT NULL,
-                    PRIMARY KEY (`id`),
-                    UNIQUE INDEX `UNIQ_46C8B806EA000B103D9AB4A64DEF17BCE4289BF4` (`class_id`, `object_identity_id`, `field_name`, `ace_order`),
-                    INDEX `IDX_46C8B806EA000B103D9AB4A6DF9183C9` (`class_id`, `object_identity_id`, `security_identity_id`),
-                    INDEX `IDX_46C8B806EA000B10` (`class_id`),
-                    INDEX `IDX_46C8B8063D9AB4A6` (`object_identity_id`),
-                    INDEX `IDX_46C8B806DF9183C9` (`security_identity_id`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
+                foreach ($tablesMapping as $tableName) {
+                    $connection->executeQuery(sprintf('DROP TABLE IF EXISTS %s', $tableName));
+                }
 
-                $connection->exec("CREATE TABLE IF NOT EXISTS `acl_object_identities` (
-                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                    `parent_object_identity_id` INT(10) UNSIGNED NULL DEFAULT NULL,
-                    `class_id` INT(10) UNSIGNED NOT NULL,
-                    `object_identifier` VARCHAR(100) NOT NULL,
-                    `entries_inheriting` TINYINT(1) NOT NULL,
-                    PRIMARY KEY (`id`),
-                    UNIQUE INDEX `UNIQ_9407E5494B12AD6EA000B10` (`object_identifier`, `class_id`),
-                    INDEX `IDX_9407E54977FA751A` (`parent_object_identity_id`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
+                $schema = new \Symfony\Component\Security\Acl\Dbal\Schema($tablesMapping);
 
-                $connection->exec("CREATE TABLE IF NOT EXISTS `acl_object_identity_ancestors` (
-                    `object_identity_id` INT(10) UNSIGNED NOT NULL,
-                    `ancestor_id` INT(10) UNSIGNED NOT NULL,
-                    PRIMARY KEY (`object_identity_id`, `ancestor_id`),
-                    INDEX `IDX_825DE2993D9AB4A6` (`object_identity_id`),
-                    INDEX `IDX_825DE299C671CEA1` (`ancestor_id`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
+                $platform = $connection->getDatabasePlatform();
 
-                $connection->exec("CREATE TABLE IF NOT EXISTS `acl_security_identities` (
-                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-                    `identifier` VARCHAR(200) NOT NULL,
-                    `username` TINYINT(1) NOT NULL,
-                    PRIMARY KEY (`id`),
-                    UNIQUE INDEX `UNIQ_8835EE78772E836AF85E0677` (`identifier`, `username`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
-
-                $connection->exec("CREATE TABLE IF NOT EXISTS `idx_page_content` (
-                    `page_uid` VARCHAR(32) NOT NULL,
-                    `content_uid` VARCHAR(32) NOT NULL,
-                    PRIMARY KEY (`page_uid`, `content_uid`),
-                    INDEX `IDX_PAGE` (`page_uid`),
-                    INDEX `IDX_CONTENT` (`content_uid`)
-                )
-                COLLATE='utf8_general_ci'
-                ENGINE=InnoDB;
-                ");
+                foreach ($schema->toSql($platform) as $query) {
+                    $connection->executeQuery($query);
+                }
 
                 /**
                  * Creation of Admin user
@@ -246,10 +180,13 @@ switch ($step) {
                 $encoderFactory = $application->getContainer()->get('security.context')->getEncoderFactory();
 
                 $adminUser = new \BackBee\Security\User($_POST['username'], $_POST['user_password'], 'admin', 'admin');
-                $adminUser->setApiKeyEnabled(true)
-                          ->setActivated(true);
+                $adminUser
+                    ->setApiKeyEnabled(true)
+                    ->setActivated(true)
+                ;
                 $encoder = $encoderFactory->getEncoder($adminUser);
-                $adminUser->setPassword($encoder->encodePassword($_POST['user_password'], ''))
+                $adminUser
+                    ->setPassword($encoder->encodePassword($_POST['user_password'], ''))
                     ->setEmail($_POST['user_email'])
                     ->generateRandomApiKey()
                 ;
@@ -257,11 +194,11 @@ switch ($step) {
                 $entityManager->persist($adminUser);
                 $entityManager->flush($adminUser);
 
-                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml.dist');
+                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__).'/repository/Config/security.yml.dist');
                 $security['sudoers'] = [$adminUser->getLogin() => $adminUser->getId()];
-                file_put_contents(dirname(__DIR__) . '/repository/Config/security.yml', $yaml->dump($security));
-                chmod(dirname(__DIR__) . '/repository/Config/security.yml', 0755);
-                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__) . '/repository/Config/security.yml');
+                file_put_contents(dirname(__DIR__).'/repository/Config/security.yml', $yaml->dump($security));
+                chmod(dirname(__DIR__).'/repository/Config/security.yml', 0755);
+                $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__).'/repository/Config/security.yml');
             } catch (\Exception $e) {
                 // to be catched by Debug component
             }
@@ -303,8 +240,9 @@ switch ($step) {
                 // Website creation
                 if (null === $site = $em->find('BackBee\Site\Site', md5($label))) {
                     $site = new \BackBee\Site\Site(md5($label));
-                    $site->setLabel($label)
-                         ->setServerName($siteConfig['domain'])
+                    $site
+                        ->setLabel($label)
+                        ->setServerName($siteConfig['domain'])
                     ;
                     $em->persist($site);
                     $em->flush($site);
@@ -315,9 +253,9 @@ switch ($step) {
 
                 // Home layout
                 if (null === $layout = $em->find('BackBee\Site\Layout', md5('defaultlayout-' . $label))) {
-                    $defaultlayout = $em->find('BackBee\Site\Layout', '7e7d57b47beb1f326a72726dca6df9dd');
                     $layout = new \BackBee\Site\Layout(md5('defaultlayout-' . $label));
-                    $layout->setData($defaultlayout->getData())
+                    $layout
+                        ->setData('{"templateLayouts":[{"title":"Layout : 12 col(s)","layoutSize":{"height":300,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1332943638139_1","layoutClass":"bb4ResizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":5,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","position":"none","height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":true,"accept":[""],"maxentry":"0","defaultClassContent":null}]}')
                         ->setLabel('Home')
                         ->setPath('Home.twig')
                         ->setPicPath($layout->getUid() . '.png')
@@ -329,7 +267,8 @@ switch ($step) {
                 // Article's layout
                 if (null === $articleLayout = $em->find('BackBee\Site\Layout', md5('articlelayout-' . $label))) {
                     $articleLayout = new BackBee\Site\Layout(md5('articlelayout-' . $label));
-                    $articleLayout->setData('{"templateLayouts":[{"title":"Layout : 12 col(s)","layoutSize":{"height":300,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1332943638139_1","layoutClass":"bb4ResizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":5,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","position":"none","height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":true,"accept":[""],"maxentry":"0","defaultClassContent":"Article"},{"title":"Nouvelle zone","layoutSize":{"height":800,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1383430750637_1","layoutClass":"bb5-resizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":2,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","alphaClass":"alpha","omegaClass":"omega","typeClass":"hChild","clearAfter":1,"height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":false,"accept":[],"maxentry":0,"defaultClassContent":null}]}')
+                    $articleLayout
+                        ->setData('{"templateLayouts":[{"title":"Layout : 12 col(s)","layoutSize":{"height":300,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1332943638139_1","layoutClass":"bb4ResizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":5,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","position":"none","height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":true,"accept":[""],"maxentry":"0","defaultClassContent":"Article"},{"title":"Nouvelle zone","layoutSize":{"height":800,"width":false},"gridSizeInfos":{"colWidth":60,"gutterWidth":20},"id":"Layout__1383430750637_1","layoutClass":"bb5-resizableLayout","animateResize":false,"showTitle":false,"target":"#bb5-mainLayoutRow","resizable":true,"useGridSize":true,"gridSize":2,"gridStep":100,"gridClassPrefix":"span","selectedClass":"bb5-layout-selected","alphaClass":"alpha","omegaClass":"omega","typeClass":"hChild","clearAfter":1,"height":800,"defaultContainer":"#bb5-mainLayoutRow","layoutManager":[],"mainZone":false,"accept":[],"maxentry":0,"defaultClassContent":null}]}')
                         ->setLabel('Article')
                         ->setPicPath($articleLayout->getUid() . '.png')
                         ->setSite($site)
@@ -339,7 +278,8 @@ switch ($step) {
 
                 // Creating site root page
                 if (null === $root = $em->find('BackBee\NestedNode\Page', md5('root-' . $label))) {
-                    $pagebuilder->setUid(md5('root-' . $label))
+                    $pagebuilder
+                        ->setUid(md5('root-' . $label))
                         ->setTitle('Home')
                         ->setLayout($layout)
                         ->setSite($site)
@@ -424,7 +364,7 @@ function getAllContentClasses(\BackBee\ApplicationInterface $application)
 {
     $allClasses = [];
     $categoryManager = new \BackBee\ClassContent\CategoryManager($application);
-    foreach($categoryManager->getCategories() as $category) {
+    foreach ($categoryManager->getCategories() as $category) {
         $blocks = array_map(
             function($block) {
                 return \BackBee\ClassContent\AbstractContent::CLASSCONTENT_BASE_NAMESPACE.str_replace('/', NAMESPACE_SEPARATOR, $block->type);
@@ -444,33 +384,33 @@ function setSiteGroupRights($site, $group, $rights)
     $aclProvider = $application->getSecurityContext()->getACLProvider();
     $securityIdentity = new \Symfony\Component\Security\Acl\Domain\UserSecurityIdentity($group->getObjectIdentifier(), 'BackBee\Security\Group');
 
-    if (true === array_key_exists('sites', $rights)) {
+    if (array_key_exists('sites', $rights)) {
         $sites = addSiteRights($rights['sites'], $aclProvider, $securityIdentity, $site);
-        if (true === array_key_exists('layouts', $rights)) {
+        if (array_key_exists('layouts', $rights)) {
             addLayoutRights($rights['layouts'], $aclProvider, $securityIdentity, $site, $em);
         }
 
-        if (true === array_key_exists('pages', $rights)) {
+        if (array_key_exists('pages', $rights)) {
             addPageRights($rights['pages'], $aclProvider, $securityIdentity, $em);
         }
 
-        if (true === array_key_exists('mediafolders', $rights)) {
+        if (array_key_exists('mediafolders', $rights)) {
             addFolderRights($rights['mediafolders'], $aclProvider, $securityIdentity);
         }
 
-        if (true === array_key_exists('contents', $rights)) {
+        if (array_key_exists('contents', $rights)) {
             addContentRights($rights['contents'], $aclProvider, $securityIdentity, getAllContentClasses($application));
         }
 
-        if (true === array_key_exists('bundles', $rights)) {
+        if (array_key_exists('bundles', $rights)) {
             addBundleRights($rights['bundles'], $aclProvider, $securityIdentity, $application);
         }
 
-        if (true === array_key_exists('users', $rights)) {
+        if (array_key_exists('users', $rights)) {
             addUserRights($rights['users'], $aclProvider, $securityIdentity);
         }
 
-        if (true === array_key_exists('groups', $rights)) {
+        if (array_key_exists('groups', $rights)) {
             addGroupRights($rights['groups'], $aclProvider, $securityIdentity);
         }
 
@@ -480,11 +420,11 @@ function setSiteGroupRights($site, $group, $rights)
 
 function getActions($definition)
 {
-    $actions = array();
+    $actions = [];
     if (is_array($definition)) {
-        $actions = array_intersect(array('view', 'create', 'edit', 'delete', 'publish'), $definition);
+        $actions = array_intersect(['view', 'create', 'edit', 'delete', 'publish'], $definition);
     } elseif ('all' === $definition) {
-        $actions = array('view', 'create', 'edit', 'delete', 'publish');
+        $actions = ['view', 'create', 'edit', 'delete', 'publish'];
     }
 
     return $actions;
@@ -493,13 +433,13 @@ function getActions($definition)
 function addSiteRights($sitesDefinition, $aclProvider, $securityIdentity, $site)
 {
     if (!array_key_exists('resources', $sitesDefinition) || !array_key_exists('actions', $sitesDefinition)) {
-        return array();
+        return [];
     }
 
     $actions = getActions($sitesDefinition['actions']);
 
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
 
     if (is_array($sitesDefinition['resources']) && in_array($site->getLabel(), $sitesDefinition['resources'])) {
@@ -511,17 +451,18 @@ function addSiteRights($sitesDefinition, $aclProvider, $securityIdentity, $site)
 
 function addUserRights($userDef, $aclProvider, $securityIdentity)
 {
-    if (false === array_key_exists('resources', $userDef) || false === array_key_exists('actions', $userDef)) {
-        return array();
+    if (!array_key_exists('resources', $userDef) || !array_key_exists('actions', $userDef)) {
+        return [];
     }
 
     $actions = getActions($userDef['actions']);
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
-    if (true === is_array($userDef['resources'])) {
-        foreach ($userDef['resources'] as $user_id) {
-            $user = $em->getRepository('BackBee\Security\User')->findBy(array('_id' => $user_id));
+
+    if (is_array($userDef['resources'])) {
+        foreach ($userDef['resources'] as $userId) {
+            $user = $em->getRepository('BackBee\Security\User')->findBy(['_id' => $userId]);
 
             addObjectAcl($user, $aclProvider, $securityIdentity, $actions);
         }
@@ -532,16 +473,16 @@ function addUserRights($userDef, $aclProvider, $securityIdentity)
 
 function addGroupRights($groupDef, $aclProvider, $securityIdentity)
 {
-    if (false === array_key_exists('resources', $groupDef) || false === array_key_exists('actions', $groupDef)) {
-        return array();
+    if (!array_key_exists('resources', $groupDef) || !array_key_exists('actions', $groupDef)) {
+        return [];
     }
 
     $actions = getActions($groupDef['actions']);
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
 
-    if (true === is_array($groupDef['resources'])) {
+    if (is_array($groupDef['resources'])) {
         foreach ($groupDef['resources'] as $group_id) {
             $group = $em->getRepository('BackBee\Security\Group')->findBy(array('_id' => $group_id));
 
@@ -554,7 +495,7 @@ function addGroupRights($groupDef, $aclProvider, $securityIdentity)
 
 function addLayoutRights($layoutDefinition, $aclProvider, $securityIdentity, $site, $em)
 {
-    if (!array_key_exists('resources', $layoutDefinition) || false === array_key_exists('actions', $layoutDefinition)) {
+    if (!array_key_exists('resources', $layoutDefinition) || !array_key_exists('actions', $layoutDefinition)) {
         return;
     }
 
@@ -565,7 +506,7 @@ function addLayoutRights($layoutDefinition, $aclProvider, $securityIdentity, $si
 
     if (is_array($layoutDefinition['resources'])) {
         foreach ($layoutDefinition['resources'] as $layoutLabel) {
-            if (null === $layout = $em->getRepository('BackBee\Site\Layout')->findOneBy(array('_site' => $site, '_label' => $layoutLabel))) {
+            if (null === $layout = $em->getRepository('BackBee\Site\Layout')->findOneBy(['_site' => $site, '_label' => $layoutLabel])) {
                 continue;
             }
 
@@ -578,18 +519,18 @@ function addLayoutRights($layoutDefinition, $aclProvider, $securityIdentity, $si
 
 function addPageRights($pageDefinition, $aclProvider, $securityIdentity, $em)
 {
-    if (false === array_key_exists('resources', $pageDefinition) || false === array_key_exists('actions', $pageDefinition)) {
+    if (!array_key_exists('resources', $pageDefinition) || !array_key_exists('actions', $pageDefinition)) {
         return;
     }
 
     $actions = getActions($pageDefinition['actions']);
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
 
     if (is_array($pageDefinition['resources'])) {
         foreach ($pageDefinition['resources'] as $pageUrl) {
-            $pages = $em->getRepository('BackBee\NestedNode\Page')->findBy(array('_url' => $pageUrl));
+            $pages = $em->getRepository('BackBee\NestedNode\Page')->findBy(['_url' => $pageUrl]);
             foreach ($pages as $page) {
                 addObjectAcl($page, $aclProvider, $securityIdentity, $actions);
             }
@@ -607,7 +548,7 @@ function addFolderRights($folderDefinition, $aclProvider, $securityIdentity)
 
     $actions = getActions($folderDefinition['actions']);
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
 
     if ('all' === $folderDefinition['resources']) {
@@ -624,31 +565,31 @@ function addContentRights($contentDefinition, $aclProvider, $securityIdentity, $
     if ('all' === $contentDefinition['resources']) {
         $actions = getActions($contentDefinition['actions']);
         if (0 === count($actions)) {
-            return array();
+            return [];
         }
         addClassAcl('BackBee\ClassContent\AbstractClassContent', $aclProvider, $securityIdentity, $actions);
     } elseif (is_array($contentDefinition['resources']) && 0 < count($contentDefinition['resources'])) {
         if (is_array($contentDefinition['resources'][0])) {
-            $usedClasses = array();
-            foreach($contentDefinition['resources'] as $index => $resourcesDefinition) {
-                if (false === isset($contentDefinition['actions'][$index])) {
+            $usedClasses = [];
+            foreach ($contentDefinition['resources'] as $index => $resourcesDefinition) {
+                if (!isset($contentDefinition['actions'][$index])) {
                     continue;
                 }
 
                 $actions = getActions($contentDefinition['actions'][$index]);
 
                 if ('remains' === $resourcesDefinition) {
-                    foreach($allClasses as $className) {
-                        if (false === in_array($className, $usedClasses)) {
+                    foreach ($allClasses as $className) {
+                        if (!in_array($className, $usedClasses)) {
                             $usedClasses[] = $className;
                             if (0 < count($actions)) {
                                 addClassAcl($className, $aclProvider, $securityIdentity, $actions);
                             }
                         }
                     }
-                } elseif (true === is_array($resourcesDefinition)) {
+                } elseif (is_array($resourcesDefinition)) {
                     foreach ($resourcesDefinition as $content) {
-                        $className = '\BackBee\ClassContent\\' . $content;
+                        $className = '\BackBee\ClassContent\\'.$content;
                         if (substr($className, -1) === '*') {
                             $className = substr($className, 0 - 1);
                             foreach ($allClasses as $fullClass) {
@@ -659,7 +600,7 @@ function addContentRights($contentDefinition, $aclProvider, $securityIdentity, $
                                     }
                                 }
                             }
-                        } elseif (true === class_exists($className)) {
+                        } elseif (class_exists($className)) {
                             $usedClasses[] = $className;
                             if (0 < count($actions)) {
                                 addClassAcl($className, $aclProvider, $securityIdentity, $actions);
@@ -671,11 +612,11 @@ function addContentRights($contentDefinition, $aclProvider, $securityIdentity, $
         } else {
             $actions = getActions($contentDefinition['actions']);
             if (0 === count($actions)) {
-                return array();
+                return [];
             }
 
             foreach ($contentDefinition['resources'] as $content) {
-                $className = '\BackBee\ClassContent\\' . $content;
+                $className = '\BackBee\ClassContent\\'.$content;
                 if (substr($className, -1) === '*') {
                     $className = substr($className, 0 -1);
                     foreach($allClasses as $fullClass) {
@@ -683,10 +624,8 @@ function addContentRights($contentDefinition, $aclProvider, $securityIdentity, $
                             addClassAcl($fullClass, $aclProvider, $securityIdentity, $actions);
                         }
                     }
-                } elseif (true === class_exists($className)) {
+                } elseif (class_exists($className)) {
                     addClassAcl($className, $aclProvider, $securityIdentity, $actions);
-                } else {
-
                 }
             }
         }
@@ -702,7 +641,7 @@ function addBundleRights($bundleDefinition, $aclProvider, $securityIdentity, $ap
 
     $actions = getActions($bundleDefinition['actions']);
     if (0 === count($actions)) {
-        return array();
+        return [];
     }
 
     if (is_array($bundleDefinition['resources'])) {
@@ -838,7 +777,7 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                         <div>
                             <?php $success = true; ?>
                             <?php foreach ($requirements as $requirement): ?>
-                                <div class="alert <?php echo (true === $requirement->isOk() ? 'alert-success' : 'alert-danger'); ?>">
+                                <div class="alert <?php echo ($requirement->isOk() ? 'alert-success' : 'alert-danger'); ?>">
                                     <strong><?php echo $requirement->getTitle(); ?></strong> <?php echo (true === $requirement->isOk() ? 'OK' : $requirement->getErrorMessage()); ?>
                                 </div>
                                 <?php $success = $success && $requirement->isOk(); ?>

@@ -12,3 +12,7 @@ dbal:
         collate: utf8_general_ci
         engine: InnoDB
         charset: utf8
+    orm:
+        metadata_cache_driver: # see repository/Config/services.yml.dist to enable cache of class metadata
+            type: service
+            id: @doctrine.metadata.cache.driver
