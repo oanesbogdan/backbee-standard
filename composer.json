@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "backbee/backbee": "1.0.*@dev",
-        "backbee/script-handler": "1.0.*@dev",
-        "backbee/demo-bundle": "1.0.*@dev",
-        "backbee/toolbar-bundle": "1.0.*@dev",
-        "backbee/bb-core-js": "1.0.*@dev"
+        "backbee/backbee": "1.0.0",
+        "backbee/script-handler": "1.0.0",
+        "backbee/demo-bundle": "1.0.0",
+        "backbee/toolbar-bundle": "1.0.0",
+        "backbee/bb-core-js": "1.0.0"
     },
     "autoload": {
         "psr-4": {
