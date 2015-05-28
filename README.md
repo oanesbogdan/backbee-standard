@@ -104,7 +104,7 @@ BackBee have a core team who have rights on repositories.
 * Only mergers can merge your work on master branch;
 * If one of the deciders gives a ``:-1:`` on your suggestion, the pull request won't be merged until he changes his mind;
 
-Actual mergers are @eric-chau and @crouillon, actual deciders are @pasinter, @ndufreche and @fkroockmann.
+Current mergers are @eric-chau and @crouillon, current deciders are @ndufreche and @fkroockmann, @hbaptiste, @mickaelandrieu.
 
 All the core team is here to help you if you want to improve BackBee, we love contribution :)
 
