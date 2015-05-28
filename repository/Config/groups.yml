@@ -1,5 +1,5 @@
 administrator:
-  description: "Rights on all the website and features."
+  description: "The users of this group have all rights on the website and it's features."
   sites:
     resources: all
     actions: all
@@ -29,7 +29,7 @@ administrator:
     actions: all
 
 validator:
-  description: "Rights on creation, edition and publication of pages. Can only view the rest of the website."
+  description: "Edition: Users of this group can create, edit and publish. User Management & Plugins: Restricted to administrators"
   sites:
    resources: all
    actions: [view]
@@ -59,7 +59,7 @@ validator:
     actions: [view]
 
 contributor:
-  description: "Rights on creation, edition of pages. Can only view the rest of the website."
+  description: "Users of this group can only create and edit. Publishing is unauthorized. User Management & Plugins: Restricted to administrators"
   sites:
    resources: all
    actions: [view]
