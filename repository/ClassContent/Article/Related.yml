@@ -3,7 +3,7 @@ Related:
   properties:
     name: Linked articles
     description: "A block that displays linked articles. Contains: ContentSet, Article"
-    category: [Article]
+    category: [!Article]
     clonemode: inherited
   parameters:
     rendermode: related
