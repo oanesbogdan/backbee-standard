@@ -1,5 +1,5 @@
 administrator:
-  description: "The users of this group have all rights on the website and it's features."
+  description: "The users of this group have all rights on the website and its features."
   sites:
     resources: all
     actions: all
