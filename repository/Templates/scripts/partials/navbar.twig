@@ -1,8 +1,9 @@
 <ul{% if is_header %} id="nav-primary"{% endif %} class="nav navbar-nav {% if is_header %}nav-primary{% else %}nav-footer-map{% endif %}" role="navigation">
     {% if is_header %}
-        <li>
-            <a href="{{ bb.routing.getUri('/') }}" class="navbar-brand{% if is_root %} nav-selected{% endif %}">
-                <i class="fa fa-home"></i><span class="visuallyhidden">Accueil</span>
+        <li class="nav-selected" role="presentation">
+            <a href="{{ bb.routing.getUri('/') }}">
+                <i class="fa fa-home"></i><span class="sr-only">Accueil</span>
+                <span><img class="logo" alt="Accueil" src="{{ this.getResourceUrl('img/logo.png') }}"></span>
             </a>
         </li>
     {% endif %}
