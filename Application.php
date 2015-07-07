@@ -23,6 +23,7 @@ namespace BackBee\Standard;
 
 use BackBee\BBApplication;
 use BackBee\Console\Console;
+use BackBee\Event\Event;
 
 use Symfony\Component\Finder\Finder;
 
@@ -110,7 +111,18 @@ class Application extends BBApplication
                 }
             }
         }
+    }
 
+    /**
+     * Stop the current BBApplication instance.
+     *
+     * @{inheritdoc}
+     * @return void
+     */
+    public function stop()
+    {
+        parent::stop();
+        exit();
     }
 }
 

@@ -1,0 +1,15 @@
+facebook:
+    link: "https://www.facebook.com/backbeeCMS"
+    fa_icon: "facebook"
+    title: "Facebook"
+
+twitter:
+    link: "https://twitter.com/lpdigitalsystem"
+    widget_id: "606481211662475264"
+    fa_icon: "twitter"
+    title: "Twitter"
+
+google:
+    link: "https://plus.google.com/101416676508957143369"
+    fa_icon: "google-plus"
+    title: "Google +"
