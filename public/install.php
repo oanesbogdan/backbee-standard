@@ -214,7 +214,7 @@ switch ($step) {
          * my-wonderful-website:
          *   label: 'My wonderful website'
          *   domain: my.wonderful-website.com
-         *
+         * if demo_website option is setup, install a complete Website
          */
         $application = new \BackBee\Standard\Application();
 
@@ -250,6 +250,49 @@ switch ($step) {
                 }
 
                 $application->getContainer()->set('site', $site);
+
+                if (isset($_POST['demo_website'])) {
+                    $fixtureLoader = $application
+                        ->getContainer()
+                        ->get('demo.website_loader')
+                    ;
+
+                    /* 1 - load fixtures */
+                    $dumpFile = $application->getBundle('demo')
+                        ->getBaseDirectory()
+                        .DIRECTORY_SEPARATOR
+                        .'Data'
+                        .DIRECTORY_SEPARATOR
+                        .'Fixtures'
+                        .DIRECTORY_SEPARATOR
+                        .'the_mag.sql';
+
+                    $fixtureLoader->loadFixtures($dumpFile);
+
+                    /* 2 - update website domain and label */
+                    $label = $_POST['site_name'];
+
+                    $fixtureLoader->updateWebsite(['domain' => $domain, 'label' => $label]);
+
+                    /* 3 - import pictures assets */
+                    $applicationMediaRepository = $application
+                        ->getDataDir()
+                        .DIRECTORY_SEPARATOR
+                        .'Media'
+                    ;
+
+                    $bundleMediaRepository = $application->getBundle('demo')
+                        ->getBaseDirectory()
+                        .DIRECTORY_SEPARATOR
+                        .'Data'
+                        .DIRECTORY_SEPARATOR
+                        .'Media'
+                    ;
+
+                    $fixtureLoader->importAssets($applicationMediaRepository, $bundleMediaRepository);
+
+                    break 1;
+                }
 
                 // Home layout
                 if (null === $layout = $em->find('BackBee\Site\Layout', md5('defaultlayout-' . $label))) {
@@ -912,6 +955,12 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                                 <div class="form-group">
                                     <label for="domain">Site domain</label>
                                     <input type="url" class="form-control" name="domain" placeholder="my-wonderful-website.com" required="required" />
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="demo_website"> Create demonstration website
+                                    </label>
                                 </div>
 
                                 <div class="text-right">
