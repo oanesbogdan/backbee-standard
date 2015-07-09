@@ -12,10 +12,8 @@
 
 {% block beforeMainContent %}
     <div class="container-fluid no-padding">
-        <div class="row">
-            <div class="col-sm-12">
-                {{ this.container().next()|raw }}
-            </div>
+        <div class="col-sm-12">
+            {{ this.container().next()|raw }}
         </div>
     </div>
 {% endblock %}
