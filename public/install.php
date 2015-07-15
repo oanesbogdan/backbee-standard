@@ -228,7 +228,7 @@ switch ($step) {
             $domain = $host.(empty($port) ? '' : ':'.$port);
 
             $sites = [
-                \BackBee\Utils\String::urlize($_POST['site_name']) => [
+                \BackBee\Utils\StringUtils::urlize($_POST['site_name']) => [
                     'label'  => $_POST['site_name'],
                     'domain' => $domain,
                 ],
@@ -982,8 +982,8 @@ server {
     server_name <?php echo $site['domain']; ?>;
     root <?php echo __DIR__ . '/'; ?>;
 
-    error_log /var/log/nginx/<?php echo \BackBee\Utils\String::urlize($site['label']); ?>.error.log;
-    access_log /var/log/nginx/<?php echo \BackBee\Utils\String::urlize($site['label']); ?>.access.log;
+    error_log /var/log/nginx/<?php echo \BackBee\Utils\StringUtils::urlize($site['label']); ?>.error.log;
+    access_log /var/log/nginx/<?php echo \BackBee\Utils\StringUtils::urlize($site['label']); ?>.access.log;
 
     location ~ /resources/(.*) {
         alias <?php echo dirname(__DIR__) . '/'; ?>;
