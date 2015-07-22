@@ -1,6 +1,6 @@
 # BackBee parameters
 parameters:
-    debug: true
+    debug: false
 
     # container configuration
     container_dump_directory: ~
