@@ -819,7 +819,6 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                                     <select class="form-control" name="driver" id="driver">
                                         <option value="pdo_mysql" selected>MySQL</option>
                                         <option value="pdo_pgsql">PostgreSQL</option>
-                                        <option value="pdo_sqlite">SQLite</option>
                                     </select>
                                 </div>
 
