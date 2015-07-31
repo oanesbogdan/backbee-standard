@@ -24,8 +24,11 @@ namespace BackBee\Standard;
 use BackBee\BBApplication;
 use BackBee\Console\Console;
 use BackBee\Event\Event;
+use BackBee\Security\Token\BBUserToken;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * @author e.chau <eric.chau@lp-digital.fr>
@@ -123,6 +126,31 @@ class Application extends BBApplication
     {
         parent::stop();
         exit();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBBUserToken()
+    {
+        $token = $this->getSecurityContext()->getToken();
+
+        if (!($token instanceof BBUserToken) || $token->isExpired()) {
+            $restToken = unserialize($this->getSession()->get('_security_rest_api_area'));
+            $token = $restToken ?: $token;
+        }
+
+        if ($token instanceof BBUserToken && $token->isExpired()) {
+            $event = new GetResponseEvent(
+                $this->getController(),
+                $this->getRequest(),
+                HttpKernelInterface::MASTER_REQUEST
+            );
+            $this->getEventDispatcher()->dispatch('frontcontroller.request.logout', $event);
+            $token = null;
+        }
+
+        return $token instanceof BBUserToken ? $token : null;
     }
 }
 
