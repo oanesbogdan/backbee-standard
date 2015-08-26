@@ -36,6 +36,17 @@ Article:
         signature: !!scalar
         permid: !!scalar
     parameters:
+
+        link:
+            type: "linkSelector"
+            label: "Link"
+            value: []
+
+        keyword_selector:
+            type: keywordSelector
+            label: 'Select a keyword'
+            value: []
+
         rendermode_autoblock:
             type: select
             label: 'Rendermode in autoblock'
@@ -44,6 +55,7 @@ Article:
                 block-right: 'Image right'
                 no-image: 'No image'
             value: ['block-fullwidth']
+
         exclude_from_autoblock:
             type: checkbox
             options:
