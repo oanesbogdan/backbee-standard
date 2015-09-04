@@ -5,6 +5,7 @@ Article:
         category: [Article]
         indexation: [[permid], [title->value]]
         labelized-by: title->value
+        iconized-by: image->image
     elements:
         title:
             type: BackBee\ClassContent\Element\Text
