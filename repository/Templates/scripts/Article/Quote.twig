@@ -9,7 +9,11 @@
         <div class="content-footer">
             {% if link.url is not empty %}
                 <p>
-                    <a href="{{ link.url }}" target="{{ link.target }}">{{ link.title }}</a>
+                    {% set title = link.title %}
+                    {% if link.title is empty %}
+                        {% set title = link.url %}
+                    {% endif %}
+                    <a href="{{ link.url }}" target="{{ link.target }}">{{ title }}</a>
                 </p>
             {% endif %}
         </div>
