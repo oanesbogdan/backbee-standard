@@ -1044,7 +1044,7 @@ server {
 
                     <p class="text-center">
                         <a href="<?php echo 1 === preg_match('#^http#', $site['domain']) ? $site['domain'] : 'http://' . $site['domain']; ?>" class="btn btn-success btn-lg" target="_blank">
-                            <strong>Runs <?php echo ucfirst($site['label']); ?></strong>
+                            <strong>Runs <?php echo ucfirst($site['label']); ?>. To log in, use the CTRL + ALT + B (BackBee) hotkey</strong>
                         </a>
                     </p>
 
