@@ -25,10 +25,12 @@ ClickableThumbnail:
                 rte: lite
     parameters:
         link_image:
-            type: "text"
-            value: ~
-            label: "Image link"
+            type: "url"
+            value: "http://"
+            label: ""
+            placeholder: "http://www.backbee.com/img/link-image.html"
         link_caption:
-            type: "text"
-            value: ~
+            type: "url"
+            value: ""
+            placeholder: "http://www.backbee.com/img/link.html"
             label: "Caption link: if empty Image link is used"
