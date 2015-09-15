@@ -3,6 +3,7 @@ ClickableThumbnail:
         name: Clickable Thumbnail
         description: A clickable media image
         labelized-by: title->value
+        iconized-by: image->path
         category: [Media]
     traits: [BackBee\Traits\MediaImageNameTrait,BackBee\Traits\MediaImageJsonSerializeTrait]
     elements:

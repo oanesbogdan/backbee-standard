@@ -3,6 +3,7 @@ Image:
         name: Media image
         description: A media image
         labelized-by: title->value
+        iconized-by: image->path
         category: [Media]
     traits: [BackBee\Traits\MediaImageNameTrait,BackBee\Traits\MediaImageJsonSerializeTrait]
     elements:
