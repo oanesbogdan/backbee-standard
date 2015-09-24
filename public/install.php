@@ -953,7 +953,7 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
 
                                 <div class="form-group">
                                     <label for="domain">Site domain</label>
-                                    <input type="url" class="form-control" name="domain" placeholder="my-wonderful-website.com" required="required" />
+                                    <input type="url" class="form-control" name="domain" placeholder="http://my-wonderful-website.com" required="required" />
                                 </div>
 
                                 <div class="checkbox">
