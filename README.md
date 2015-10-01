@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/backbee/backbee-standard.png?label=ready&title=Ready)](https://waffle.io/backbee/backbee-standard)
 BackBee CMS Standard Edition
 =========================
 
