@@ -21,3 +21,6 @@ Pdf:
         file:
             type: BackBee\ClassContent\Element\File
             label: fichier
+            extra:
+                dropzone:
+                    acceptedFiles: '.pdf'
