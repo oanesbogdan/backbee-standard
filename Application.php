@@ -23,7 +23,6 @@ namespace BackBee\Standard;
 
 use BackBee\BBApplication;
 use BackBee\Console\Console;
-use BackBee\Event\Event;
 use BackBee\Security\Token\BBUserToken;
 
 use Symfony\Component\Finder\Finder;
