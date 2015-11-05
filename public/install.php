@@ -4,13 +4,9 @@ if (!isset($_SERVER['HTTP_HOST'])) {
     exit('This script cannot be run from the CLI. Run it from a browser.');
 }
 
-if (!in_array(@$_SERVER['REMOTE_ADDR'], [
-    '127.0.0.1',
-    '10.0.2.2',
-    '::1',
-])) {
+if (file_exists('INSTALL_OK')) {
     header('HTTP/1.0 403 Forbidden');
-    exit('This script is only accessible from localhost.');
+    exit('BackBee is already installed.');
 }
 
 require_once __DIR__.'/BackBeeRequirements.php';
@@ -400,8 +396,10 @@ switch ($step) {
              if (is_file($file)) {
                 unlink($file);
              }
-         }
+        }
 
+        // create a tag file to know if the site is installed or not
+        file_put_contents('INSTALL_OK', 'Successfully installed BackBee CMS');
         break;
 
     case 1:
