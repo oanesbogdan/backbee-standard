@@ -11,3 +11,4 @@ doctrine.yml
 services.yml
 sites.yml
 repository/Config/security.yml
+public/INSTALL_OK
