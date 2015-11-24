@@ -21,15 +21,20 @@
 
 namespace BackBee\Event\Listener;
 
+use BackBee\ClassContent\Social\Twitter;
 use BackBee\Event\Event;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
- * Social Listener
+ * Social network Listener
  *
  * @author f.kroockmann <florian.kroockmann@lp-digital.fr>
+ * @author Mickaël Andrieu <mickael.andrieu@lp-digital.fr>
  */
 class SocialListener extends Event
 {
+    const WIDGET_API_URL = 'https://twitter.com/settings/widgets/';
+
     private static $application;
 
     public static function onPreRenderFacebook(Event $event)
@@ -68,7 +73,7 @@ class SocialListener extends Event
 
         $widgetId = $content->getParamValue('widget_id');
 
-        if (empty($widgetId)) {
+        if (empty($widgetId) || !self::checkTwitterId($widgetId)) {
             if (null !== $config && isset($config['widget_id'])) {
                 $widgetId = $config['widget_id'];
             }
@@ -87,5 +92,23 @@ class SocialListener extends Event
         }
 
         return $config;
+    }
+
+    private static function checkTwitterId($widgetId)
+    {
+        $resourceUrl = self::WIDGET_API_URL . $widgetId;
+        $resourceExists = false;
+
+        $ch = curl_init($resourceUrl);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if($statusCode == '200'){
+            $resourceExists = true;
+        }
+
+        return $resourceExists;
     }
 }
