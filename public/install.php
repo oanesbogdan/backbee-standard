@@ -11,6 +11,11 @@ if (file_exists('INSTALL_OK')) {
 
 require_once __DIR__.'/BackBeeRequirements.php';
 require_once dirname(__DIR__).'/vendor/autoload.php';
+
+if (false == ini_get('date.timezone')) {
+    date_default_timezone_set('UTC');
+}
+
 \Symfony\Component\Debug\Debug::enable();
 
 $step = isset($_POST['step']) ? intval($_POST['step']) : 1;
@@ -753,6 +758,16 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                 padding: 3px 0 0 26px !important;
                 height: 87px !important;
             }
+
+            .form-control::-webkit-input-placeholder { color: #ccc; }
+            .form-control:-moz-placeholder { color: #ccc; }
+            .form-control::-moz-placeholder { color: #ccc; }
+            .form-control:-ms-input-placeholder { color: #ccc; }
+
+            .form-control:focus::-webkit-input-placeholder { color: white; }
+            .form-control:focus:-moz-placeholder { color: white; }
+            .form-control:focus::-moz-placeholder { color: white; }
+            .form-control:focus:-ms-input-placeholder { color: white; }
         </style>
 
     </head>
@@ -827,7 +842,6 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                                     <label for="driver">Database</label>
                                     <select class="form-control" name="driver" id="driver">
                                         <option value="pdo_mysql" selected>MySQL</option>
-                                        <option value="pdo_pgsql">PostgreSQL</option>
                                     </select>
                                 </div>
 
@@ -906,7 +920,7 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="domain">Site domain</label>
+                                    <label for="domain">Site URL</label>
                                     <input type="url" class="form-control" name="domain" placeholder="http://my-wonderful-website.com" required="required" />
                                 </div>
 

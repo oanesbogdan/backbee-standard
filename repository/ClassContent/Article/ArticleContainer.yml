@@ -1,4 +1,4 @@
-ListArticleContainer:
+ArticleContainer:
     extends: \BackBee\ClassContent\Block\Autoblock
     properties:
         name : Article Container

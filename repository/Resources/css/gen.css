@@ -6792,7 +6792,7 @@ button.close {
 .fa-medium:before {
   content: "\f23a";
 }
-/* 
+/*
  * 	Core Owl Carousel CSS File
  *	v1.3.2
  */
@@ -6859,7 +6859,7 @@ button.close {
   -ms-transform: translate3d(0, 0, 0);
 }
 /*
-* 	Owl Carousel Owl Demo Theme 
+* 	Owl Carousel Owl Demo Theme
 *	v1.3.2
 */
 /*Edited JUL2014 - loader gif path*/
@@ -6935,8 +6935,8 @@ button.close {
   min-height: 150px;
   background: url(../img/AjaxLoader.gif) no-repeat center center;
 }
-/* 
- *  Owl Carousel CSS3 Transitions 
+/*
+ *  Owl Carousel CSS3 Transitions
  *  v1.3.2
  */
 .owl-origin {
@@ -7391,7 +7391,7 @@ body {
   }
 }
 /*
-Styling for screen 
+Styling for screen
 NB.: so as to bypass IE<9: one can add 'only' to the query eg.: "@media only screen and"
 */
 @media screen {
@@ -7651,7 +7651,7 @@ NB.: so as to bypass IE<9: one can add 'only' to the query eg.: "@media only scr
     transition: none;
   }
   /*
-BUTTONs	
+BUTTONs
 */
   .btn {
     font-family: 'Lato', sans-serif;
@@ -7953,7 +7953,12 @@ BREADCRUMB
   .breadcrumb li.active {
     color: #555555;
   }
-  /*
+
+  .main.container {
+    min-height: 200px;
+  }
+
+/*
 FOOTER
 */
   .footer-wrapper .footer-social {
@@ -7985,11 +7990,8 @@ FOOTER
     position: static;
   }
   .footer-wrapper .footer-social .footer-toolbar {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    margin: 0;
-    margin-top: -1.15em;
+    margin: 15px 0;
+    text-align: right;
   }
   .footer-wrapper .footer-social .ttl {
     display: inline-block;
