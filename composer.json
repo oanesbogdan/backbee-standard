@@ -31,8 +31,7 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
-            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall",
-            "BackBee\\Standard\\Composer\\ScriptHandler::moveClient"
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
         ],
         "post-update-cmd": [
             "BackBee\\Standard\\Composer\\ScriptHandler::buildParameters",
@@ -40,8 +39,7 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::buildBootstrap",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildDoctrineConfig",
             "BackBee\\Standard\\Composer\\ScriptHandler::buildServicesConfig",
-            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall",
-            "BackBee\\Standard\\Composer\\ScriptHandler::moveClient"
+            "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
         ]
     },
     "extra": {
