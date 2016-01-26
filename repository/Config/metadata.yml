@@ -12,3 +12,7 @@ robots:
   content:
     default: ''
     select: ['', 'noindex', 'nofollow', 'noindex, nofollow']
+title:
+  name: 'title'
+  content:
+    default: ''
