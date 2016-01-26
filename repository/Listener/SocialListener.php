@@ -22,8 +22,7 @@
 namespace BackBee\Event\Listener;
 
 use BackBee\ClassContent\Social\Twitter;
-use BackBee\Event\Event;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
+use BackBee\Renderer\Event\RendererEvent;
 
 /**
  * Social network Listener
@@ -31,20 +30,20 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
  * @author f.kroockmann <florian.kroockmann@lp-digital.fr>
  * @author Mickaël Andrieu <mickael.andrieu@lp-digital.fr>
  */
-class SocialListener extends Event
+class SocialListener
 {
     const WIDGET_API_URL = 'https://twitter.com/settings/widgets/';
 
     private static $application;
 
-    public static function onPreRenderFacebook(Event $event)
+    public static function onRenderFacebook(RendererEvent $event)
     {
-        $renderer = $event->getEventArgs();
-        self::$application = $event->getDispatcher()->getApplication();
+        $renderer = $event->getRenderer();
+        self::$application = $event->getApplication();
 
         $config = self::getSocialConfig('facebook');
 
-        $content = $renderer->getObject();
+        $content = $event->getTarget();
 
         $link = $content->getParamValue('link');
         if (empty($link)) {
@@ -62,7 +61,7 @@ class SocialListener extends Event
                  ->assign('height', $content->getParamValue('height'));
     }
 
-    public static function onPreRenderTwitter(Event $event)
+    public static function onRenderTwitter(RendererEvent $event)
     {
         $renderer = $event->getEventArgs();
         self::$application = $event->getDispatcher()->getApplication();

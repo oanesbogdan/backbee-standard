@@ -21,21 +21,20 @@
 
 namespace BackBee\Event\Listener;
 
-use BackBee\Event\Event;
+use BackBee\Renderer\Event\RendererEvent;
 
 /**
  * Article Listener
  *
  * @author f.kroockmann <florian.kroockmann@lp-digital.fr>
  */
-class ArticleListener extends Event
+class ArticleListener
 {
-    public static function onRender(Event $event)
+    public static function onRender(RendererEvent $event)
     {
-        $renderer = $event->getEventArgs();
-        $application = $event->getDispatcher()->getApplication();
+        $renderer = $event->getRenderer();
 
-        $content = $renderer->getObject();
+        $content = $event->getTarget();
         $tag = null;
         $url = '#';
         $mainNode = $content->getMainNode();

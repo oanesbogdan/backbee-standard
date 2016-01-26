@@ -21,22 +21,21 @@
 
 namespace BackBee\Event\Listener;
 
-use BackBee\Event\Event;
+use BackBee\Renderer\Event\RendererEvent;
 
 /**
  * Quote Listener
  *
  * @author f.kroockmann <florian.kroockmann@lp-digital.fr>
  */
-class QuoteListener extends Event
+class QuoteListener
 {
-    public static function onRender(Event $event)
+    public static function onRender(RendererEvent $event)
     {
-        $renderer = $event->getEventArgs();
-        $application = $event->getDispatcher()->getApplication();
-        $em = $application->getEntityManager();
+        $renderer = $event->getRenderer();
+        $em = $event->getApplication()->getEntityManager();
 
-        $content = $renderer->getObject();
+        $content = $event->getTarget();
 
         $links = $content->getParamValue('link');
         $link = [
