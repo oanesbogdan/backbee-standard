@@ -124,6 +124,14 @@ class BackBeeRequirements
             "BackBee expected log directory at `$logDirectory`; this directory must be readable and writable"
         );
 
+        $publicDirectory = __DIR__;
+        $requirements[] = new Requirement(
+            true,
+            is_dir($publicDirectory) && is_readable($publicDirectory) && is_writable($publicDirectory),
+            'Public directory - writable and readable',
+            "BackBee's installer expected public directory located at `$publicDirectory` to be readable and writable"
+        );
+
         return $requirements;
     }
 }
