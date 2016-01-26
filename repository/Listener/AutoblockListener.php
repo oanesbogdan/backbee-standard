@@ -21,7 +21,7 @@
 
 namespace BackBee\Event\Listener;
 
-use BackBee\Event\Event;
+use BackBee\Renderer\Event\RendererEvent;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -30,7 +30,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  *
  * @author      f.kroockmann <florian.kroockmann@lp-digital.fr>
  */
-class AutoblockListener extends Event
+class AutoblockListener
 {
     /**
      * @var BackBee\BBApplication
@@ -47,29 +47,31 @@ class AutoblockListener extends Event
      */
     private static $renderer;
 
-    public static function onRender(Event $event)
+    public static function onRender(RendererEvent $event)
     {
-        self::$renderer = $event->getEventArgs();
+        self::$renderer = $event->getRenderer();
         self::$application = self::$renderer->getApplication();
         self::$em = self::$application->getEntityManager();
 
-        $content = self::$renderer->getObject();
+        $content = $event->getTarget();
         $parentNode = self::getParentNode($content->getParamValue('parent_node'));
 
         $selector = ['parentnode' => [($parentNode !== null) ? $parentNode->getUid() : null]];
 
-        $contents = self::$em->getRepository('BackBee\ClassContent\AbstractClassContent')
-                             ->getSelection(
-                                 $selector,
-                                 in_array('multipage', $content->getParamValue('multipage')),
-                                 in_array('recursive', $content->getParamValue('recursive')),
-                                 (int) $content->getParamValue('start'),
-                                 (int) $content->getParamValue('limit'),
-                                 self::$application->getBBUserToken() === null,
-                                 false,
-                                 (array) $content->getParamValue('content_to_show'),
-                                 (int) $content->getParamValue('delta')
-                             );
+        $contents = self::$em
+            ->getRepository('BackBee\ClassContent\AbstractClassContent')
+            ->getSelection(
+                $selector,
+                in_array('multipage', $content->getParamValue('multipage')),
+                in_array('recursive', $content->getParamValue('recursive')),
+                (int) $content->getParamValue('start'),
+                (int) $content->getParamValue('limit'),
+                self::$application->getBBUserToken() === null,
+                false,
+                (array) $content->getParamValue('content_to_show'),
+                (int) $content->getParamValue('delta')
+            )
+        ;
 
         $count = $contents instanceof Paginator ? $contents->count() : count($contents);
 
