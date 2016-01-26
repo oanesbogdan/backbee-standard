@@ -932,6 +932,11 @@ server {
     error_log /var/log/nginx/<?php echo \BackBee\Utils\StringUtils::urlize($site['label']); ?>.error.log;
     access_log /var/log/nginx/<?php echo \BackBee\Utils\StringUtils::urlize($site['label']); ?>.access.log;
 
+    location ~ /resources/toolbar/(.*) {
+        alias <?php echo dirname(__DIR__) . '/'; ?>;
+        try_files /vendor/backbee/bb-core-js/$1 @rewriteapp;
+    }
+
     location ~ /resources/(.*) {
         alias <?php echo dirname(__DIR__) . '/'; ?>;
         try_files /repository/Resources/$1 /vendor/backbee/backbee/Resources/$1 @rewriteapp;
@@ -969,6 +974,9 @@ server {
         Order allow,deny
         allow from all
     &lt;/Directory&gt;
+
+    RewriteCond %{DOCUMENT_ROOT}/../vendor/backbee/bb-core-js/$1 -f
+    RewriteRule ^/resources/toolbar/(.*)$ %{DOCUMENT_ROOT}/../vendor/backbee/bb-core-js/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Resources/$1 -f
     RewriteRule ^/resources/(.*)$ %{DOCUMENT_ROOT}/../repository/Resources/$1 [L]
