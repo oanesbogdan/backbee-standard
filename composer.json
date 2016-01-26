@@ -12,12 +12,10 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "backbee/backbee": "1.0.*@dev",
-        "backbee/script-handler": "1.0.*@dev",
-        "backbee/demo-bundle": "1.0.*@dev",
-        "backbee/toolbar-bundle": "1.0.*@dev",
-        "backbee/bb-core-js": "1.0.*@dev",
-        "twig/extensions": "1.1.0"
+        "backbee/backbee": "~1.1.0@beta",
+        "backbee/script-handler": "~1.1.0@beta",
+        "backbee/demo-bundle": "~1.1.0@beta",
+        "backbee/toolbar-bundle": "~1.1.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,6 +40,7 @@
             "BackBee\\Standard\\Composer\\ScriptHandler::clearBackBeeInstall"
         ]
     },
+    "minimum-stability": "beta",
     "extra": {
         "prompt": true,
         "generate-structure": true,
@@ -52,9 +51,6 @@
             {
                 "file": "repository/Config/parameters.yml"
             }
-        ],
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+        ]
     }
 }
