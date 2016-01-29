@@ -942,6 +942,16 @@ server {
         try_files /repository/Resources/$1 /vendor/backbee/backbee/Resources/$1 @rewriteapp;
     }
 
+    location ~ /images/([a-f0-9]+)/([a-f0-9]+)/(.+)\.([^\.]+) {
+        alias <?php echo dirname(__DIR__) . '/'; ?>;
+        try_files /repository/Data/Storage/$1/$2.$4 /repository/Data/Media/$1/$2.$4 @rewriteapp;
+    }
+
+    location ~ /images/(.*) {
+        alias <?php echo dirname(__DIR__) . '/'; ?>;
+        try_files /repository/Data/Storage/$1 /Data/Media/$1 @rewriteapp;
+    }
+
     location @emptygif404 { empty_gif; }
 
     location / {
@@ -991,10 +1001,10 @@ server {
     RewriteRule ^/images/([a-f0-9]{3})/([a-f0-9]{29})/(.*)\.([^\.]+)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1/$2.$4 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 -f
-    RewriteRule ^images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 [L]
+    RewriteRule ^/images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Storage/$1 [L]
 
     RewriteCond %{DOCUMENT_ROOT}/../repository/Data/Media/$1 -f
-    RewriteRule ^images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1 [L]
+    RewriteRule ^/images/(.*)$ %{DOCUMENT_ROOT}/../repository/Data/Media/$1 [L]
 &lt;/VirtualHost&gt;
                     </pre>
 
