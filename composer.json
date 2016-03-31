@@ -12,9 +12,9 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "backbee/backbee": "~1.1.0@beta",
-        "backbee/script-handler": "~1.1.0@beta",
-        "backbee/demo-bundle": "~1.1.0@beta",
+        "backbee/backbee": "~1.1.0",
+        "backbee/script-handler": "~1.1.0",
+        "backbee/demo-bundle": "~1.1.0",
         "backbee/toolbar-bundle": "~1.1.0"
     },
     "autoload": {
