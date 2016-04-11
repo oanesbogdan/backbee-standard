@@ -15,7 +15,9 @@
         "backbee/backbee": "~1.1.0",
         "backbee/script-handler": "~1.1.0",
         "backbee/demo-bundle": "~1.1.0",
-        "backbee/toolbar-bundle": "~1.1.0"
+        "backbee/toolbar-bundle": "~1.1.0",
+        "badcow/lorem-ipsum": "~1.1.0",
+        "eric-chau/bijective": "dev-master"
     },
     "autoload": {
         "psr-4": {

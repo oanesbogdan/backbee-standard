@@ -1,7 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/backbee/backbee-standard.png?label=ready&title=Ready)](https://waffle.io/backbee/backbee-standard)
-BackBee CMS Standard Edition
-=========================
-
+# BackBee CMS Standard Edition
 
 ## Overview ##
 
@@ -14,7 +12,7 @@ BackBee offers what we like to call WYSIWYRG, What You See Is What You Really Ge
 
 :speech_balloon: If you want to have more information about the project progression you can take a look at the actual [Roadmap](https://waffle.io/backbee/backbee-standard).
 
-## Features: ##
+## Features ##
 
 * Powerful and easy to use content system
 * Multiple websites
@@ -29,6 +27,11 @@ BackBee offers what we like to call WYSIWYRG, What You See Is What You Really Ge
 
  - **[Developer PHP Api docs](http://api.backbee.com)**
  - **[BlogBee (tutorial)](http://blogbee.backbee.com)**
+ - **[Video tutorials](http://www.backbee.com/get-started/video-tutorials)**
+
+If you want to generate some fake categories and articles, you can use this command:
+
+    $ ./backbee fake:data:generate --article-limit 20 --category-limit 5
 
 ## Ask for help ##
 

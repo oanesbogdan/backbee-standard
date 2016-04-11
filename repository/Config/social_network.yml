@@ -9,7 +9,7 @@ twitter:
     fa_icon: "twitter"
     title: "Twitter"
 
-google:
-    link: "https://plus.google.com/101416676508957143369"
-    fa_icon: "google-plus"
-    title: "Google +"
+github:
+    link: "https://github.com/backbee/backbee-standard"
+    fa_icon: "github"
+    title: "Github"
