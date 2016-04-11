@@ -1,11 +1,11 @@
-// compress: true 
-/* Lp digital - v1.3 June 2015*/  
+// compress: true
+/* Lp digital - v1.4 June 2015*/
 //
-// BASIS stylesheet: Demo template BackBee 
-// 
+// BASIS stylesheet: Demo template BackBee
+//
 // LESS Basis CSS
-// 
-// 
+//
+//
 
 
 // Importing Custom VAR + Custom RESET + Custom Fonts
@@ -37,7 +37,7 @@
 @silver-medium:         #DBDBDB; //silver medium
 @silver-dark:           @gray-dark; //silver dark
 // colors
-@brand-primary:         #00BFFF;
+@brand-primary:         #006AB9;
 @brand-success:         #5cb85c;
 @brand-info:            #4673AF;
 @brand-warning:         #f0ad4e;
@@ -54,54 +54,55 @@
 // 0 - Grid
 
 // 1 - GENERAL
-@body-bg-clr:				#efefef; 
-@header-bg-clr:				#1c1c1c; 
+@body-bg-clr:               #eee; //#efefef
+@content-emphasis-bg:          @brand-primary;
+
 //
-@text-color:                @gray-dark; 
-@link-color:                @brand-primary; 
-@link-hover-color:          darken(@link-color, 15%); 
+@text-color:                @gray-dark;
+@link-color:                @brand-primary;
+@link-hover-color:          darken(@link-color, 15%);
 //
-@box-bg-clr:                #fff; 
-@box-padding:               1em; 
-@box-margin:				0 0 @grid-gutter-width 0;
+@box-bg-clr:                #fff;
+@box-padding:               1em;
+@box-margin:                0 0 @grid-gutter-width 0;
 //
-@z-header:					900; //zindex header
+@z-header:                  900; //zindex header
 
 // 2 - HEADER
 @header-logo-vertical-margin: 20px;
 //
-@header-bg-clr:               #1c1c1c; 
-@header-txt-clr:              #fff;
+@header-bg-clr:               #fff;
+@header-txt-clr:              #1c1c1c;
 //
 @header-link-clr:             #fff; // font color
 @header-link-clr-hover:       @brand-primary;
-@header-link-bg-clr:          transparent; // background
-@header-link-bg-clr-hover:    @header-bg-clr; 
+@header-link-bg-clr:          @brand-primary; // background
+@header-link-bg-clr-hover:    @header-bg-clr;
 
 // 3 - NAV
-@nav-bg-clr:                  @header-bg-clr;
-@nav-txt-clr:                 #fff;
-@nav-link-clr:                #fff;
+@nav-bg-clr:                  #fff;
+@nav-txt-clr:                 #1c1c1c;
+@nav-link-clr:                #1c1c1c;
 @nav-link-clr-hover:          @brand-primary;
 @nav-link-bg:                 transparent;
 @nav-link-bg-hover:           transparent;
 @navbar-height:               40px;
 
 // 4 - FOOTER
-@footer-bg-clr:               @header-bg-clr;
-@footer-txt-clr:              #ddd;
-@footer-link-clr:             #ddd;
+@footer-bg-clr:               #fff;
+@footer-txt-clr:              #1c1c1c;
+@footer-link-clr:             #1c1c1c;
 @footer-link-clr-hover:       @brand-primary;
 @footer-link-bg:              tan;
 @footer-link-bg-hover:        darken(tan,7%);
 
 
-// 5 - TYPO 
+// 5 - TYPO
 // Import Google fonts:
 // - Lato:400,700,400italic,700italic
 // - Roboto:700
 // - Oswald:400
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic); 
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 @import url(http://fonts.googleapis.com/css?family=Roboto:700);
 @import url(http://fonts.googleapis.com/css?family=Oswald:400);
 //
@@ -130,8 +131,7 @@
 //** For `@screen-sm-min` and up.
 @container-sm:                 @container-tablet;
 
-// Medium screen / desktop 
-// Npx is the GRID width requested by the STUDIO
+// Medium screen / desktop
 @container-desktop:            ((968px + @grid-gutter-width));
 //** For `@screen-md-min` and up.
 @container-md:                 @container-desktop;
@@ -144,7 +144,7 @@
 // END VAR-iables
 
 //
-@border-color:              #ccc;
+@border-color:              #eee;
 @border-radius-base:        3px;
 @border-radius-large:       3px;
 @border-radius-small:       2px;
@@ -176,7 +176,7 @@
 
 
 // Components
-@import "@{boot-path}component-animations.less"; 
+@import "@{boot-path}component-animations.less";
 @import "@{boot-path}dropdowns.less";
 @import "@{boot-path}button-groups.less";
 @import "@{boot-path}input-groups.less";
@@ -228,6 +228,6 @@ Twitter: https://twitter.com/micr0bitz
 */
 @animationLessTime: 1s;
 @animationLessLocation: '../lib/animate.less-master/source';
-// 
-@import "@{animationLessLocation}/animated.less"; 
-@import "@{animationLessLocation}/fadeIn.less"; 
+//
+@import "@{animationLessLocation}/animated.less";
+@import "@{animationLessLocation}/fadeIn.less";

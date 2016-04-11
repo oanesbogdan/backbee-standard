@@ -98,7 +98,9 @@ Styling for screen
 NB.: so as to bypass IE<9: one can add 'only' to the query eg.: "@media only screen and"
 */
 @media screen {
-body [class*="col-"] {/*outline:solid 1px purple;*/}
+body [class*="col-"] > [class*="col-"] {
+    padding: 0;
+}
 body {font-family:@font-default; font-size:1em; font-weight: 300; color:@text-color; background:@body-bg-clr;}
 //RWD media
 img, embed, object, video, canvas {max-width:100%; height:auto;}
@@ -158,6 +160,10 @@ hr {
     padding:@grid-gutter-width 0 0 0; margin:0 0 @grid-gutter-width 0;
     border-width:0; border-bottom:solid 1px @border-color;
     clear:both; .clearfix;
+    .content + & {
+        margin-top: 0;
+        padding-top: 0;
+    }
 }
 /**/
 main {display:block;} // for old browser that won't display main properly
@@ -166,14 +172,13 @@ main {display:block;} // for old browser that won't display main properly
 .time {}
 /*figure*/
 .figure {
-    margin: 0 0 1em 0;
     position:relative;
     padding:0;
     &.block-left {margin:0 @grid-gutter-width 0.5em 0;}
     &.block-right {margin:0 0 0.5em @grid-gutter-width;}
     &.block-fullwidth {/*width:100%;*/ margin:0 0 0.75em 0; padding:0; text-align:center;}
     .figcaption {
-        font-size:0.8666em; color:@text-color; font-style:normal; text-align:left; margin:0; padding:1em; background-color:@gray-light;
+        font-size:0.8666em; color:@text-color; font-style:normal; text-align:left; margin:0; padding:1em; background-color:#eee;
         a {color:@nav-link-clr; text-decoration:underline; &:hover, &:focus {color:@nav-link-clr-hover;} }
     }
 }
@@ -318,7 +323,8 @@ Header
         border:solid 1px @text-color;
         .border-radius(0);
         &.collapsed {
-            background-color:@header-bg-clr;
+            background-color: @brand-primary; border-color: @brand-primary;
+            &, .fa {color:@header-link-clr;}
         }
     }
     //--> Navbar toggler button
@@ -348,7 +354,8 @@ Header
     }
     //--> Search toggler button
     .search-toggle {
-        .fa {color:@white;}
+        background-color: @brand-primary;
+        &, .fa {color:@header-link-clr;}
     }
 //
 }
@@ -357,12 +364,12 @@ Header
 /*
 NAV
 */
-.nav-sep {&:before {content:""; position:absolute; top:0; bottom:0; left:0; border-left:1px solid lighten(@nav-bg-clr, 17%);}}
+.nav-sep {&:before {content:""; position:absolute; top:0; bottom:0; left:0; border-left:1px solid #eee;}}
 .nav {
     // wrapper for nav
     &.navbar-wrapper {
         background-color:@nav-bg-clr;
-        border-top:solid 1px lighten(@nav-bg-clr, 17%);
+        border-top:solid 1px #eee;
         // Sticky navbar when SM MD or LG screens
         @media (min-width:@screen-sm-min) {
             &.affix-top {position:static; }
@@ -417,7 +424,7 @@ NAV
         // Alt logo for stycky nav is hidden
         .logo {display:none;}
         // On XS screen removing home ico + showing Alt logo
-        @media (min-width:@screen-sm-min) {
+        @media (min-width: @screen-sm-min) {
             .affix & {
                 .fa-home {display:none;}
                 .logo {display:inline-block; max-height:13px;}
@@ -433,7 +440,7 @@ NAV
 /*
 BREADCRUMB
 */
-.breadcrumb-wrapper {padding:@grid-gutter-width/4 0; background-color:darken(@body-bg-clr, 5%);}
+.breadcrumb-wrapper {padding:@grid-gutter-width/4 0;}
 .breadcrumb {
     margin:0;
     padding:0;
@@ -451,14 +458,16 @@ BREADCRUMB
 FOOTER
 */
 .footer-wrapper {
+    margin-top: 2em;
     //
     .footer-social {
         color:@footer-txt-clr;
         background-color:@footer-bg-clr;
         > .container {position:relative;}
-        a,
+        a {background-color: transparent;}
         .btn {
             color:@header-link-clr; background-color:@header-link-bg-clr;
+            border: 1px solid @header-link-bg-clr;
             &:hover, &:focus {color:@header-link-clr-hover; background-color:@header-link-bg-clr-hover;}
         //
         }
@@ -475,7 +484,6 @@ FOOTER
         }
         .footer-toolbar {
             margin: 15px 0; text-align: right;
-
             @media (max-width:@screen-xs-max) {
                 position:static;
             }
@@ -491,7 +499,8 @@ FOOTER
     .footer-nav {
         color:@footer-txt-clr;
         background-color:@footer-bg-clr;
-        border-top:solid 1px lighten(@nav-bg-clr, 17%);
+        border-top:solid 1px #eee;
+        border-bottom:solid 1px #eee;
         .nav-footer-map {
             //
             @media (max-width:@screen-sm-max) {
@@ -503,9 +512,9 @@ FOOTER
     }
     //
     .footer-term {
-        color:@footer-txt-clr;
-        text-align:right;
-        background-color:lighten(@footer-bg-clr, 10%);
+        color:#666;
+        text-align:center;
+        background-color:#333;
         .list-inline {
             font-family:@font-nav;
             font-size:0.8125em;
@@ -513,16 +522,13 @@ FOOTER
             margin:@grid-gutter-width/4 0; padding:0;
         }
         a {
-            color:@footer-link-clr;
+            color:#666;
             &:hover {color:@footer-link-clr-hover;}
         }
     }
 //
 }
 
-.main.container {
-    min-height: 200px;
-}
 
 /*
 STRUCTURE
@@ -551,7 +557,7 @@ STRUCTURE
         b {font-weight:normal;}
         .time {color:@text-color;}
         [class*="metadata-"] {padding-right:0.5em;}
-        .metadata-tag {color:@brand-danger; }
+        .metadata-tag {color:@brand-primary; }
         .metadata-author {}
     }
     //
@@ -578,7 +584,7 @@ STRUCTURE
         font-style:italic;
         margin:@box-margin;
         padding:@box-padding;
-        background-color:@box-bg-clr;
+        background-color:#eee;
         border-left:solid 4px @brand-primary;
     }
     //
@@ -772,7 +778,7 @@ PUSH
     //
     a {
         color:@text-color; text-decoration:none;
-        &:hover, &:focus {color:@link-hover-color; }
+        &:hover, &:focus {color:@link-color; }
     }
     //
     .push-item {
@@ -785,11 +791,15 @@ PUSH
         &.content-emphasis {
             @my-text-color:@white;
             color:@my-text-color;
+            background-color:@content-emphasis-bg;
             .content-inner-pad {
-                background-color:@header-bg-clr;
+                background-color:@content-emphasis-bg;
                 a {
                     color:@my-text-color; text-decoration:none;
-                    &:hover, &:focus {color:@link-hover-color; }
+                    //&:hover, &:focus {color:@link-hover-color; }
+                }
+                .metadata-tag {
+                    color: #fff;
                 }
             //
             }
@@ -817,13 +827,81 @@ PUSH
         h2, .h2 {font-size:1.0em; margin:0 0 0.5em 0; padding:0;}
     }
 }
+//
+.push-item.content-news {
+    background-color:  #fff;
 
+    a {
+        color: #333;
+        &:hover, &:focus {
+            color: @brand-primary;
+            text-decoration: none;
+        }
+    }
+    .content-inner-pad {padding: 0.1em 1em 1em 1em;}
+    .figure {
+        margin: 0 0 0.75em 0;
+        overflow: hidden;
+        img {
+            .transition(ease 500ms)
+        }
+    }
+
+    &:hover {
+        .figure img {.scale(1.1);}
+    }
+}
+
+.page-is-home .push-item.content-news:not(.content-highlight) {
+    .figure {
+        height: 204px;
+    }
+}
+
+.page-is-home {
+    .content-highlight {
+        position: relative;
+        .content-inner-pad {
+            position:absolute;
+            padding-bottom:1px;
+            padding-top: 1em;
+            bottom: 1em;
+            left:1em;
+            right:1em;
+            background-color: rgba(255,255,255,0.8);
+        }
+
+        .figure  {
+            margin: 0;
+            img {
+                margin: 0;
+            }
+        }
+    }
+    .box-listing-news, .push-item:not(.content-highlight) {
+        @media (min-width: @screen-md-min) {
+            height: 400px;
+        }
+    }
+}
+
+
+.page-is-home {
+    .main.container {
+        margin-top: 2em;
+    }
+}
+
+.main.container {
+    min-height: 200px;
+}
 
 /*
 OWL
 */
 .owl-carousel {
     //
+    background-color: #fff;
     // Reset Path
     .grabbing {
         cursor:url(../img/grabbing.png) 8 8, move;
@@ -901,10 +979,52 @@ OWL
             /*--> buttons*/
             .owl-buttons {
                 .owl-prev,
-                .owl-next {margin-top:-@slider-pager-margin; }
+                .owl-next {margin-top:-@slider-pager-margin;
+                    .fa {margin-top:-53px;}
+                }
             }
         //
         }
+
+
+    //-->control
+    &>.owl-controls {
+        margin:0 auto; text-align:center;
+        .owl-pagination {
+            position:absolute; left:0; right:0; bottom:7px;
+            margin:@slider-pager-margin;
+            .owl-page {display:inline-block; vertical-align:middle;}
+            .owl-page span {.square(13px); background-color:@brand-primary; border:solid 1px @brand-primary; .scale(0.85); margin-left:0.25em; margin-right:0.25em;}
+            .owl-page.active span {background-color:transparent; .scale(1);}
+        }
+        .owl-buttons {
+            .owl-prev,
+            .owl-next {
+                position:absolute; top:0; bottom:0; width:56px; margin-top:-@slider-pager-margin;
+                color:@text-color; text-align:center;
+                background-color:transparent; .opacity(0.75);
+                .transition-fx-std;
+                @media (max-width: @screen-xs-max) {display:none;}
+                &:hover, &:focus {color:@white;}
+                .fa {position:absolute; left:0; right:0; top:50%; margin-top:-0.5em; font-size:8em;}
+                //
+            //
+            }
+            .owl-prev {left:0;
+                .fa {border-right-width:1px;}
+                &:hover, &:focus {}
+            }
+            .owl-next {right:0;
+                .fa {border-left-width:1px;}
+                &:hover, &:focus {}
+            }
+        }
+        //
+    }
+
+
+
+
         /*--> pagination*/
         .slider-has-pagination {
             @media (max-width:@screen-xs-max) {margin-bottom:@grid-gutter-width;}
@@ -939,8 +1059,11 @@ OWL
                 .transform-origin(center center 0);
                 //
                 @media (min-width:@screen-lg-min) {
-                    .translate3d(0px; -20%; 0px);
-                    .transform-origin(center center 0);
+
+//                    outline-offset:-10px;
+//                    .translate3d(0px; -20%; 0px);
+//                    .transform-origin(center center 0);
+
                 }
             //
             }
@@ -973,8 +1096,11 @@ OWL
     //
     }
     //--> XXX
-    &.slider-XXX {
-    //
+    &.owl-theme{
+        margin: 0 0 32px 0;
+        .owl-pagination {
+            display: none;
+        }
     }
 //
 }
@@ -985,7 +1111,7 @@ PAGER
 */
 .pager {
     margin:0 0 @grid-gutter-width/2 0; padding:@grid-gutter-width/2 0;
-    border-top:dotted 1px @gray-light; border-bottom:dotted 1px @gray-light;
+    border-top:solid 1px #eee; border-bottom:solid 1px #eee;
     &.pager-alt {
         li {
             > a,
