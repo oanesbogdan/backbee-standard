@@ -44,7 +44,7 @@
     },
     "minimum-stability": "beta",
     "extra": {
-        "prompt": true,
+        "prompt": false,
         "generate-structure": true,
         "backbee-cache-dir": "cache",
         "backbee-log-dir": "log",
