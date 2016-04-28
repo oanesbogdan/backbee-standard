@@ -68,6 +68,14 @@ switch ($step) {
          *   collation: utf8_general_ci
          *   defaultTableOptions: { collate: utf8_general_ci, engine: InnoDB, charset: utf8 }
          */
+
+        $errorMsg = null;
+        $username = null;
+        $password = null;
+        $dbname = null;
+        $host = null;
+        $port = null;
+
         if (
             isset($_POST['driver'])
             && isset($_POST['engine'])
@@ -126,10 +134,14 @@ switch ($step) {
                         )
                     );
                 } catch (\Exception $e) {
-                    echo('Failed to connect to database with the current exception message : '. $e->getMessage());
-                    // to be catched by Debug component
+                    $errorMsg = 'Failed to connect to database with provided credentials.';
+                    error_log('Failed to connect to database with the current exception message: '. $e->getMessage());
+
+                    break;
                 }
             }
+
+            cleanupEnvironment();
 
             $application = new \BackBee\Standard\Application();
 
@@ -145,8 +157,10 @@ switch ($step) {
                 $database->updateBackBeeSchema();
                 $database->updateBundlesSchema();
             } catch (\Exception $e) {
-                echo('Failed to create or to update database with the current exception message : '. $e->getMessage());
+                error_log('Failed to create or to update database with the current exception message: '. $e->getMessage());
+
                 // to be catched by Debug component
+                throw $e;
             }
 
             $entityManager = $application->getEntityManager();
@@ -202,6 +216,7 @@ switch ($step) {
                 $security = \Symfony\Component\Yaml\Yaml::parse(dirname(__DIR__).'/repository/Config/security.yml');
             } catch (\Exception $e) {
                 // to be catched by Debug component
+                throw $e;
             }
 
             $step = 4;
@@ -352,21 +367,26 @@ switch ($step) {
             }
         }
 
-        $containerDumpDir = $application->getContainer()->getParameter('container.dump_directory');
-        foreach (glob($containerDumpDir.DIRECTORY_SEPARATOR.'*') as $file) {
-             if (is_file($file)) {
-                unlink($file);
-             }
-        }
+        cleanupEnvironment($application->getCacheDir());
 
         // create a tag file to know if the site is installed or not
         file_put_contents('INSTALL_OK', 'Successfully installed BackBee CMS');
+
+
         break;
 
     case 1:
     default:
         $backbeeRequirements = new BackBeeRequirements();
         $requirements = $backbeeRequirements->getRequirements();
+}
+
+function cleanupEnvironment($cacheDir = null, $logDir = null)
+{
+    $cacheDir = $cacheDir ?: realpath(__DIR__ . '/../cache');
+    $logDir = $logDir ?: realpath(__DIR__ . '/../log');
+
+    exec("rm -rf {$cacheDir}/* {$logDir}/*");
 }
 
 /**
@@ -835,6 +855,10 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
 
                         <h2>Step 3 - Database configuration</h2>
 
+                            <?php if (false != $errorMsg): ?>
+                                <div class="alert alert-danger" role="alert"><?php echo $errorMsg; ?></div>
+                            <?php endif; ?>
+
                             <form action="" method="POST" role="form">
                                 <input type="hidden" name="step" value="3" />
 
@@ -855,27 +879,27 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
 
                                 <div class="form-group">
                                     <label for="host">Database host</label>
-                                    <input type="text" class="form-control" name="host" placeholder="localhost" required="required" />
+                                    <input type="text" class="form-control" name="host" placeholder="localhost" required="required" value="<?php echo $host; ?>" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="port">Database port</label>
-                                    <input type="text" class="form-control" name="port" value="3306" required="required" />
+                                    <input type="text" class="form-control" name="port" value="3306" required="required" value="<?php echo $port; ?>" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="dbname">Database name</label>
-                                    <input type="text" class="form-control" name="dbname" required="required" />
+                                    <input type="text" class="form-control" name="dbname" required="required" value="<?php echo $dbname; ?>" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="user">Database user username</label>
-                                    <input type="text" class="form-control" name="user" placeholder="root" required="required" />
+                                    <input type="text" class="form-control" name="user" placeholder="root" required="required" value="<?php echo $username; ?>" />
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password">Database user password</label>
-                                    <input type="password" class="form-control" name="password" />
+                                    <input type="password" class="form-control" name="password" value="<?php echo $password; ?>" />
                                 </div>
 
                                 <h2>Admin user configuration</h2>
@@ -932,6 +956,11 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
 
                     <?php elseif (5 === $step): ?>
                         <h2>Installation completed</h2>
+
+                        <p class="text-center">
+                            Faced any issue during installation?<br />
+                            <a class="btn btn-danger" href="http://backbee.com/services/contact-us" target="_blank" style="margin: 15px 0">Let us know</a>
+                        </p>
 
                         <p>Example of nginx virtual host:</p>
                         <?php $site = array_shift($sites); ?>
