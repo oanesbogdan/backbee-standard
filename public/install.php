@@ -29,30 +29,45 @@ switch ($step) {
          * -> debug true|false
          * -> container cache directory /path/to/container/cache
          * -> container auto-generate true|false
+         *
+         * services.yml update
+         * -> bbapp.cache.dir
+         * -> bbapp.log.dir
+         * -> bbapp.data.dir
          */
         if (!isset($_POST['debug']) && !isset($_POST['container_dump_directory'])) {
-            $bootstrap_requirements = new BootstrapRequirements();
-            $requirements = $bootstrap_requirements->getRequirements();
             break;
-        } else {
-
-            $containerDirectory = realpath(__DIR__.'/..').'/cache/container';
-            if (!is_dir($containerDirectory)) {
-                mkdir($containerDirectory, 755);
-            }
-
-            $bootstrap = [
-                'debug'     => (bool) intval($_POST['debug']),
-                'container' => [
-                    'dump_directory' => $containerDirectory,
-                    'autogenerate'   => true
-                ]
-            ];
-
-            file_put_contents(dirname(__DIR__).'/repository/Config/bootstrap.yml', $yaml->dump($bootstrap));
-
-            $step = 3;
         }
+
+        $containerDirectory = realpath(__DIR__.'/..').'/cache/container';
+        if (!is_dir($containerDirectory)) {
+            mkdir($containerDirectory, 755);
+        }
+
+        $bootstrap = [
+            'debug'     => (bool) intval($_POST['debug']),
+            'container' => [
+                'dump_directory' => $containerDirectory,
+                'autogenerate'   => true
+            ]
+        ];
+
+        file_put_contents(dirname(__DIR__).'/repository/Config/bootstrap.yml', $yaml->dump($bootstrap));
+
+        $servicesPath = realpath(__DIR__.'/../repository/Config/services.yml');
+        if (file_exists($servicesPath)) {
+            $services = $yaml->parse($servicesPath);
+        } else {
+            $services = ['parameters'];
+        }
+
+        $services['parameters']['bbapp.cache.dir'] = realpath(__DIR__.'/../cache');
+        $services['parameters']['bbapp.log.dir'] = realpath(__DIR__.'/../log');
+        $services['parameters']['bbapp.data.dir'] = realpath(__DIR__.'/../repository/Data');
+
+        file_put_contents($servicesPath, $yaml->dump($services));
+
+        $step = 3;
 
     case 3:
         /**
@@ -237,16 +252,26 @@ switch ($step) {
 
             $em = $application->getEntityManager();
             $pagebuilder = $application->getContainer()->get('pagebuilder');
-            $host = parse_url($_POST['domain'],PHP_URL_HOST);
+            $host = parse_url($_POST['domain'], PHP_URL_HOST);
             $port = parse_url($_POST['domain'], PHP_URL_PORT);
+            $path = parse_url($_POST['domain'], PHP_URL_PATH);
+            $domain = $host.(empty($port) ? '' : ':'.$port).($path ?: '');
 
-            $domain = $host.(empty($port) ? '' : ':'.$port);
+            $sites = [];
+            $sitesPath = realpath(__DIR__.'/../repository/Config/sites.yml');
+            if (file_exists($sitesPath)) {
+                $sites = $yaml->parse($sitesPath);
+            }
 
-            $sites = [
-                \BackBee\Utils\StringUtils::urlize($_POST['site_name']) => [
-                    'label'  => $_POST['site_name'],
-                    'domain' => $domain,
-                ],
+            $label = \BackBee\Utils\StringUtils::urlize($_POST['site_name']);
+
+            if (!isset($sites[$label])) {
+                $sites[$label] = [];
+            }
+
+            $sites[$label] = [
+                'label'  => $_POST['site_name'],
+                'domain' => $domain,
             ];
 
             file_put_contents(dirname(__DIR__) . '/repository/Config/sites.yml', $yaml->dump($sites));
@@ -819,36 +844,19 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                         <h2>Step 2 - General application configuration</h2>
 
                         <div>
-                            <?php $success = true; ?>
-                            <?php foreach ($requirements as $requirement): ?>
-                                <div class="alert <?php echo ($requirement->isOk() ? 'alert-success' : 'alert-danger'); ?>">
-                                    <strong><?php echo $requirement->getTitle(); ?></strong> <?php echo (true === $requirement->isOk() ? 'OK' : $requirement->getErrorMessage()); ?>
+                            <form action="" method="POST" role="form" class="form-inline">
+                                <div class="form-group">
+                                    <label for="debug" >Developer mode ?</label>
+                                    <select name="debug" id="debug" class="form-control">
+                                        <option value="0" selected>false</option>
+                                        <option value="1">true</option>
+                                    </select>
                                 </div>
-                                <?php $success = $success && $requirement->isOk(); ?>
-                            <?php endforeach; ?>
-                        </div>
-
-                        <div>
-                            <?php if (false === $success): ?>
-                                <form action="" method="POST">
-                                    <input type="hidden" name="step" value="2" />
-                                    <input type="submit" class="btn btn-primary" value="Check again" />
-                                </form>
-                            <?php else: ?>
-                                <form action="" method="POST" role="form" class="form-inline">
-                                    <div class="form-group">
-                                        <label for="debug" >Developer mode ?</label>
-                                        <select name="debug" id="debug" class="form-control">
-                                            <option value="0" selected>false</option>
-                                            <option value="1">true</option>
-                                        </select>
-                                    </div>
-                                    <input type="hidden" name="step" value="2" />
-                                    <div class="text-right">
-                                        <input type="submit" class="btn btn-primary" value="Save it and go to step 3" />
-                                    </div>
-                                </form>
-                            <?php endif; ?>
+                                <input type="hidden" name="step" value="2" />
+                                <div class="text-right">
+                                    <input type="submit" class="btn btn-primary" value="Save it and go to step 3" />
+                                </div>
+                            </form>
                         </div>
 
                     <?php elseif (3 === $step): ?>
@@ -957,19 +965,38 @@ function addAcl($objectIdentity, $aclProvider, $securityIdentity, $rights)
                     <?php elseif (5 === $step): ?>
                         <h2>Installation completed</h2>
 
+                        <p><strong>Thank you for installing BackBee</strong></p>
+
+                        <div class="alert alert-danger">
+                            Access rights to `<?php echo realpath('.'); ?>` and `<?php echo realpath(__DIR__.'/../repository/Config'); ?>` folders should be now set to read only.
+                        </div>
+
+                        <p>
+                            For performance consideration, we recommend you to set up some rewriting rules.<br/>
+                            Examples for <a href="#nginx">nginx</a> or for <a href="#apache">apache</a> servers are available below.<br/>
+                        </p>
+
+                        <?php $site = array_shift($sites); ?>
+                        <hr/>
+                        <p class="text-center">
+                            <a href="<?php echo 1 === preg_match('#^http#', $site['domain']) ? $site['domain'] : '//' . $site['domain']; ?>" class="btn btn-success btn-lg" target="_blank">
+                                <strong>Runs <?php echo ucfirst($site['label']); ?>. To log in, use the CTRL + ALT + B (BackBee) hotkey</strong>
+                            </a>
+                        </p>
+
+                        <hr/>
                         <p class="text-center">
                             Faced any issue during installation?<br />
                             <a class="btn btn-danger" href="http://backbee.com/services/contact-us" target="_blank" style="margin: 15px 0">Let us know</a>
                         </p>
 
-                        <p>Example of nginx virtual host:</p>
-                        <?php $site = array_shift($sites); ?>
+                        <p id="nginx">Example of nginx virtual host:</p>
                         <pre>
 # example of nginx virtual host for BackBee project
 server {
-    listen 80;
+    listen <?php echo $port ?: '80' ?>;
 
-    server_name <?php echo $site['domain']; ?>;
+    server_name <?php echo $host; ?>;
     root <?php echo __DIR__ . '/'; ?>;
 
     error_log /var/log/nginx/<?php echo \BackBee\Utils\StringUtils::urlize($site['label']); ?>.error.log;
@@ -1011,11 +1038,11 @@ server {
         fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }
 }</pre>
-                    <p>Example of apache2 virtual host:</p>
+                    <p id="apache">Example of apache2 virtual host:</p>
                     <pre>
 # example of apache2 virtual host for BackBee project
-&lt;VirtualHost *:80&gt;
-    ServerName <?php echo $site['domain']; ?>
+&lt;VirtualHost *:<?php echo $port ?: '80' ?>&gt;
+    ServerName <?php echo $host; ?>
 
     DocumentRoot <?php echo __DIR__ . '/'; ?>
 
@@ -1051,12 +1078,6 @@ server {
 &lt;/VirtualHost&gt;
                     </pre>
 
-                    <p class="text-center">
-                        <a href="<?php echo 1 === preg_match('#^http#', $site['domain']) ? $site['domain'] : 'http://' . $site['domain']; ?>" class="btn btn-success btn-lg" target="_blank">
-                            <strong>Runs <?php echo ucfirst($site['label']); ?>. To log in, use the CTRL + ALT + B (BackBee) hotkey</strong>
-                        </a>
-                    </p>
-
                     <?php else: ?>
 
                         <div>
@@ -1064,10 +1085,11 @@ server {
 
                             <?php $success = true; ?>
                             <?php foreach ($requirements as $requirement): ?>
-                                <div class="alert <?php echo (true === $requirement->isOk() ? 'alert-success' : 'alert-danger'); ?>">
+                            <div class="alert <?php echo (true === $requirement->isOk() ? 'alert-success' : (Requirement::LEVEL_ERROR === $requirement->getLevel() ? 'alert-danger' : 'alert-warning')); ?>">
                                     <strong><?php echo $requirement->getTitle(); ?></strong> <?php echo (true === $requirement->isOk() ? 'OK' : $requirement->getErrorMessage()); ?>
+                                    <?php if ($requirement->forInstallOnly()): ?><br/>(<em>For installation process only)</em><?php endif; ?>
                                 </div>
-                                <?php $success = $success && $requirement->isOk(); ?>
+                                <?php $success = $success && ($requirement->isOk() || Requirement::LEVEL_ERROR > $requirement->getLevel()); ?>
                             <?php endforeach; ?>
                         </div>
 
