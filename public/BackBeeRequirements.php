@@ -24,6 +24,10 @@
  */
 class Requirement
 {
+    const LEVEL_OK = 0;
+    const LEVEL_WARNING = 1;
+    const LEVEL_ERROR = 2;
+
     /**
      * @var mixed
      */
@@ -45,14 +49,26 @@ class Requirement
     private $errorMessage;
 
     /**
+     * @var integer
+     */
+    private $level;
+
+    /**
+     * @var boolean
+     */
+    private $installOnly;
+
+    /**
      * Requirement's constructor
      */
-    public function __construct($expected, $value, $title, $errorMessage)
+    public function __construct($expected, $value, $title, $errorMessage, $installOnly = false, $level = null)
     {
         $this->expected = $expected;
         $this->value = $value;
         $this->title = $title;
         $this->errorMessage = $errorMessage;
+        $this->installOnly = true === $installOnly;
+        $this->level = $level ?: self::LEVEL_ERROR;
     }
 
     /**
@@ -61,6 +77,14 @@ class Requirement
     public function isOk()
     {
         return $this->expected === $this->value;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function forInstallOnly()
+    {
+        return true === $this->installOnly;
     }
 
     /**
@@ -77,6 +101,14 @@ class Requirement
     public function getErrorMessage()
     {
         return $this->errorMessage;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 }
 
@@ -103,6 +135,13 @@ class BackBeeRequirements
 
         $requirements[] = new Requirement(
             true,
+            function_exists('token_get_all'),
+            'PHP Tokenizer enable',
+            'Your version of PHP was compiled with <em>--disable-tokenizer</em>, please recompile it without this option.'
+        );
+
+        $requirements[] = new Requirement(
+            true,
             is_dir(realpath(__DIR__ . '/../vendor/composer')),
             'Dependencies installation',
             'You have to install BackBee\'s dependencies by running `composer.phar install` (https://getcomposer.org/)'
@@ -124,36 +163,42 @@ class BackBeeRequirements
             "BackBee expected log directory at `$logDirectory`; this directory must be readable and writable"
         );
 
+        $dataDirectory = realpath(__DIR__ . '/..') . '/repository/Data';
+        $requirements[] = new Requirement(
+            true,
+            is_dir($dataDirectory) && is_writable($dataDirectory) && is_readable($dataDirectory),
+            'Data folder - readable and writable',
+            "BackBee expected data directory at `$dataDirectory`; this directory should be readable and writable to allow file uploads",
+            false,
+            Requirement::LEVEL_WARNING
+        );
+
+        $gdModule = 'gd';
+        $requirements[] = new Requirement(
+            true,
+            extension_loaded($gdModule),
+            'gd extension - installed',
+            "Extension `$gdModule` should be installed to allow post-treatment after image upload",
+            false,
+            Requirement::LEVEL_WARNING
+        );
+
+        $configDirectory = realpath(__DIR__ . '/..') . '/repository/Config';
+        $requirements[] = new Requirement(
+            true,
+            is_dir($configDirectory) && is_readable($configDirectory) && is_writable($configDirectory),
+            'Configuration directory - writable',
+            "BackBee's installer expected configuration directory located at `$configDirectory` to be readable and writable",
+            true
+        );
+
         $publicDirectory = __DIR__;
         $requirements[] = new Requirement(
             true,
             is_dir($publicDirectory) && is_readable($publicDirectory) && is_writable($publicDirectory),
-            'Public directory - writable and readable',
-            "BackBee's installer expected public directory located at `$publicDirectory` to be readable and writable"
-        );
-
-        return $requirements;
-    }
-}
-
-/**
- * @author Eric Chau <eric.chau@lp-digital.fr>
- */
-class BootstrapRequirements
-{
-    /**
-     * @return array
-     */
-    public function getRequirements()
-    {
-        $requirements = [];
-
-        $configDirectory = dirname(__DIR__) . '/repository/Config';
-        $requirements[] = new Requirement(
-            true,
-            is_dir($configDirectory) && is_readable($configDirectory) && is_writable($configDirectory),
-            'Project config directory - writable and readable',
-            "BackBee expected project config directory at `$configDirectory`; this directory must be readable and writable"
+            'Public directory - writable',
+            "BackBee's installer expected public directory located at `$publicDirectory` to be readable and writable",
+            true
         );
 
         return $requirements;
