@@ -9,7 +9,7 @@
     {% endif %}
     {% for item in sections %}
         <li{% if selected and selected.getUid() == item.getUid() %} class="nav-selected"{% endif %} role="presentation">
-            <a href="{{ bb.routing.getUri(item.getUrl()) }}">{{ item.getTitle() }}</a>
+            <a href="{{ bb.routing.getUri(item.getUrl()) }}" target="{{ item.getTarget() }}">{{ item.getTitle() }}</a>
         </li>
     {% endfor %}
 </ul>
